@@ -10,7 +10,7 @@ class Wishlist extends BaseModel{
         this.description = wishlistData.description || "";
         this.imgURL = wishlistData.imgURL || "";
         this.userId = wishlistData.userId || null;
-        this.eventId = wishlistData.eventId || null;
+        this.eventCategory = "Birthday" || "Christmas" || "Wedding" || "Anniversary" || "Thanksgiving" || "New Year" || "Other";
     }
 
     validatePrivacy(value) {

@@ -12,7 +12,8 @@ exports.getUsersAll = async (req, res) => {
 exports.registerUser = async (req, res) => {
     try{
         const newUser = await UserService.register(req.body); 
-        res.status(201).json({ user: newUser });
+        res.status(201).json({ message: "User registered successfully",
+            ...newUser });
     }catch(error){
         res.status(400).json({ error: error.message });
     }
@@ -21,7 +22,10 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     try{
         const user = await UserService.signin(req.body);
-        res.status(200).json({ user });
+        res.status(200).json({
+            message: "Login successful",
+            ...result
+        });
     }catch(error){
         res.status(400).json({ error: error.message });
     }
