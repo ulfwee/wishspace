@@ -1,6 +1,15 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
+exports.getAllUsers = async () => {
+    try{
+        const userInstance = new User();
+        return await userInstance.getDataAll();
+    }catch(error){
+        throw new Error(`Couldnt get all users: ${error.message}`);
+    }
+}
+
 exports.register = async (userData) => {
     try{
         const saltRounds = 10;

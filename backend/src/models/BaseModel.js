@@ -8,18 +8,35 @@ class BaseModel{
 
     checkWork(){
         console.log(`Working with collection: ${this.name}`);
+    } 
+
+    async getDataAll(){
+        try{
+            const result = await this.collection.get();
+
+            if(result.empty){
+                return [];
+            }
+
+            return result.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        }catch(error){
+            throw new Error(`Error getting all data from colection ${this.name}: ${error.message}`);
+        }
     }
 
     async create(data){
         try{
-            const docRef = await this.collectionName.add({ 
+            const docRef = await this.collection.add({ 
                 ...data,
                 createdAt: new Date(),
                 updatedAt: new Date()
             });
-            return { id: docRef, ...data };
+            return { id: docRef.id, ...data };
         }catch(error){
-            throw new Error(`Error creating document in ${this.collection.id}: ${error.message}`);
+            throw new Error(`Error creating document in ${this.name}: ${error.message}`);
         }
     }
 
