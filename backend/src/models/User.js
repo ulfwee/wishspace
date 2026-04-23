@@ -25,8 +25,7 @@ class User extends BaseModel{
             biography: this.biography,
             image: this.image,
             friends: this.friends
-        }
-        
+        }   
     }
 }
 

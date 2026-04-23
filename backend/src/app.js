@@ -8,6 +8,6 @@ app.get('/', (req, res) => {
     res.send("WishSpace Server is ALIVE! 🚀");
 });
 
-app.use('/users', userRoutes)
+app.use('/users', userRoutes);
 
 module.exports = app;

@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 class BaseModel{
     constructor(collectionName){
-        this.collectionName = db.collection(collectionName);
+        this.collection = db.collection(collectionName);
         this.name = collectionName;
     }
 
@@ -28,7 +28,7 @@ class BaseModel{
             const docRef = this.collection.doc(id);
             await docRef.update({
                 ...data,
-                updatedAt: new Data()
+                updatedAt: new Date()
             });
             return { id, ...data };
         }catch(error){
@@ -43,6 +43,15 @@ class BaseModel{
         }catch(error){
             throw new Error(`[${this.name}] Delete Error for ID ${id}: ${error.message}`);
         }
+    }
+
+    async findByField(field, value){
+        const found = await this.collection.where(field, '==', value).get();
+
+        if(found.empty) return null;
+
+        const doc = found.docs[0];
+        return { id: doc.id, ...doc.data() };
     }
 
     async findById(id){
