@@ -29,19 +29,26 @@ exports.register = async (userData) => {
 
         const newUserInstance = new User({
             ...userData,
-            password: hashedPassword
+            password: hashedPassword,
+            role: "user"
         })
 
         const result = await newUserInstance.create(newUserInstance.toData());
         console.log(`User ${result.name} registered successfully`);
 
         const token = jwt.sign(
-            { userId: result.id, email: result.email },
+            { 
+                userId: result.id, 
+                email: result.email,
+                role: result.role
+            },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
 
         delete result.password;
+
+        
 
         return {
             user: result,
@@ -53,16 +60,20 @@ exports.register = async (userData) => {
 };
 
 exports.signin = async (userData) => {
-    try{
-        if(!userData.email || !userData.password) {
-            throw new Error("Email ans password are required");
+    try {
+        if (!userData.email || !userData.password) {
+            throw new Error("Email and password are required");
         }
 
         const userInstance = new User();
         const existingUser = await userInstance.findByField("email", userData.email);
 
-        if(!existingUser){
-            throw new Error("User was not found");
+        if (!existingUser) {
+            throw new Error("User not found");
+        }
+
+        if (!existingUser.password) {
+            throw new Error("User has no password (invalid data)");
         }
 
         const isMatch = await bcrypt.compare(
@@ -70,23 +81,34 @@ exports.signin = async (userData) => {
             existingUser.password
         );
 
-        if(!isMatch){
+        if (!isMatch) {
             throw new Error("Invalid password");
         }
 
+        const isAdmin =
+            existingUser.email === process.env.ADMIN_EMAIL;
+
         const token = jwt.sign(
-            { userId: existingUser.id, email: existingUser.email },
+            {
+                userId: existingUser.id,
+                email: existingUser.email,
+                role: isAdmin ? "admin" : existingUser.role
+            },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
 
+
+        console.log("INPUT:", userData);
+console.log("FOUND USER:", existingUser);
+console.log("PASSWORD FROM DB:", existingUser.password);
         delete existingUser.password;
-        
+
         return { user: existingUser, token };
-    }catch(error){
+    } catch (error) {
         throw new Error(`Logging in failed: ${error.message}`);
     }
-}
+};
 
 exports.updateExistingUser = async (userId, updateData) => {
     const userInstance = new User();

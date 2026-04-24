@@ -13,6 +13,12 @@ class User extends BaseModel{
         this.biography = userData.biography || "";
         this.image = userData.image || null;
         this.friends = userData.friends || [];
+        this.role = this.validateRole(userData.role);
+    }
+
+    validateRole(role) {
+        const allowed = ["user", "admin"];
+        return allowed.includes(role) ? role : "user";
     }
 
     toData(){
@@ -24,7 +30,8 @@ class User extends BaseModel{
             password: this.password,
             biography: this.biography,
             image: this.image,
-            friends: this.friends
+            friends: this.friends,
+            role: this.role
         }   
     }
 }

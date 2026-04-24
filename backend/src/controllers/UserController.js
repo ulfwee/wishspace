@@ -24,7 +24,7 @@ exports.loginUser = async (req, res) => {
         const user = await UserService.signin(req.body);
         res.status(200).json({
             message: "Login successful",
-            ...result
+            ...user
         });
     }catch(error){
         res.status(400).json({ error: error.message });
