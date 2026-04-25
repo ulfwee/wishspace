@@ -47,3 +47,12 @@ exports.deleteWishlistInstance = async (wishlistId) => {
         throw new Error(`Couldnt delete wishlist: ${error.message}`);
     }
 }
+
+exports.getUserWishlists = async (userId) => {
+    try {
+        const wishlistInstance = new Wishlist();
+        return await wishlistInstance.findByField("userId", userId);
+    } catch (error) {
+        throw new Error(`Failed to get wishlists: ${error.message}`);
+    }
+};

@@ -100,8 +100,8 @@ exports.signin = async (userData) => {
 
 
         console.log("INPUT:", userData);
-console.log("FOUND USER:", existingUser);
-console.log("PASSWORD FROM DB:", existingUser.password);
+        console.log("FOUND USER:", existingUser);
+        console.log("PASSWORD FROM DB:", existingUser.password);
         delete existingUser.password;
 
         return { user: existingUser, token };
@@ -130,3 +130,19 @@ exports.deleteUser = async(userId) => {
         throw new Error(`Couldnt delete user: ${error.message}`);
     }
 }
+
+exports.getUserById = async (userId) => {
+    try {
+        const userInstance = new User();
+        const user = await userInstance.findById(userId);
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        delete user.password;
+        return user;
+    } catch (error) {
+        throw new Error(`Get user failed: ${error.message}`);
+    }
+};

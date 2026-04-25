@@ -29,9 +29,10 @@ class Wishlist extends BaseModel{
             privacy: this.privacy,
             description: this.description,
             imgURL: this.imgURL,
-            userId: this.userId
+            userId: this.userId,
+            eventCategory: this.eventCategory
         };
     }
 }
 
-module.exports =Wishlist;
+module.exports = Wishlist;

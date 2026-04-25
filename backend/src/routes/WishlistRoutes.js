@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const WishlistController = require('../controllers/WishlistController');
+const UserController = require('../controllers/UserController');
 const auth = require('../middleware/auth');
 const role = require('../middleware/roleMiddleware');
 

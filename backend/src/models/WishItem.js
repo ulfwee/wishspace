@@ -10,15 +10,26 @@ class WishItem extends BaseModel{
         this.description = itemData.description || "";
         this.link = itemData.link || "";
         this.imgURL = itemData.imgURL || "";
+        this.priority = this.validatePriority(this.priority);
         this.wishlistId = itemData.wishlistId || null;
-        this.eventCategory = "Birthday" || "Christmas" || "Wedding" || "Anniversary" || "Thanksgiving" || "New Year" || "Other";
+        this.isBooked = this.validateBooking(this.isBooked);
     }
 
-    validatePrivacy(value) {
-        const allowed = ["private", "friends", "public"];
+    validatePriority(value) {
+        const allowed = ["low", "medium", "high"];
 
         if (!allowed.includes(value)) {
-            return "public"; 
+            return "medium"; 
+        }
+
+        return value;
+    }
+
+    validateBooking(value) {
+        const allowed = ["true", "false"];
+
+        if (!allowed.includes(value)) {
+            return "false"; 
         }
 
         return value;
@@ -27,12 +38,15 @@ class WishItem extends BaseModel{
     toData() {
         return {
             title: this.title,
-            privacy: this.privacy,
+            price: this.price,
             description: this.description,
+            link: this.link,
             imgURL: this.imgURL,
-            userId: this.userId
+            priority: this.priority,
+            wishlistId: this.wishlistId,
+            isBooked: this.isBooked
         };
     }
 }
 
-module.exports =Wishlist;
+module.exports = WishItem;

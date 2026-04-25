@@ -37,3 +37,14 @@ exports.deleteWishlist = async (req, res) => {
         res.status(400).json({error:error.message});
     }
 }
+
+exports.getUserWishlists = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const wishlists = await WishlistService.getUserWishlists(userId);
+
+        res.status(200).json(wishlists);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
