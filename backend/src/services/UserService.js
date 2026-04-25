@@ -146,3 +146,20 @@ exports.getUserById = async (userId) => {
         throw new Error(`Get user failed: ${error.message}`);
     }
 };
+
+exports.getMe = async (userId) => {
+    try {
+        const userInstance = new User();
+        const user = await userInstance.findById(userId);
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        delete user.password;
+
+        return user;
+    } catch (error) {
+        throw new Error(`Failed to get user: ${error.message}`);
+    }
+};

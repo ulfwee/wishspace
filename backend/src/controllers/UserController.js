@@ -61,3 +61,12 @@ exports.getUser = async (req, res) => {
         res.status(404).json({ error: error.message });
     }
 };
+
+exports.getMe = async (req, res) => {
+    try {
+        const user = await UserService.getMe(req.user.userId);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};

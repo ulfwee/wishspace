@@ -75,6 +75,16 @@ class BaseModel{
         const doc = await this.collection.doc(id).get();
         return doc.exists ? { id: doc.id, ...doc.data() } : null;
     }
+
+    validateBool(value) {
+        const allowed = ["true", "false"];
+
+        if (!allowed.includes(value)) {
+            return "false"; 
+        }
+
+        return value;
+    }
 }
 
 module.exports = BaseModel;

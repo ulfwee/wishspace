@@ -10,9 +10,9 @@ class WishItem extends BaseModel{
         this.description = itemData.description || "";
         this.link = itemData.link || "";
         this.imgURL = itemData.imgURL || "";
-        this.priority = this.validatePriority(this.priority);
+        this.priority = this.validatePriority(itemData.priority);
         this.wishlistId = itemData.wishlistId || null;
-        this.isBooked = this.validateBooking(this.isBooked);
+        this.isBooked = this.validateBool(itemData.isBooked);
     }
 
     validatePriority(value) {
@@ -20,16 +20,6 @@ class WishItem extends BaseModel{
 
         if (!allowed.includes(value)) {
             return "medium"; 
-        }
-
-        return value;
-    }
-
-    validateBooking(value) {
-        const allowed = ["true", "false"];
-
-        if (!allowed.includes(value)) {
-            return "false"; 
         }
 
         return value;
