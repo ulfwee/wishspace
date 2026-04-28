@@ -46,9 +46,7 @@ exports.register = async (userData) => {
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
 
-        delete result.password;
-
-        
+        delete result.password;        
 
         return {
             user: result,
@@ -67,9 +65,10 @@ exports.signin = async (userData) => {
 
         const userInstance = new User();
         const existingUser = await userInstance.findByField("email", userData.email);
-
+        
         if (!existingUser) {
-            throw new Error("User not found");
+            console.log("User not found by email");
+            throw new Error("Invalid email or password");
         }
 
         if (!existingUser.password) {
@@ -82,29 +81,25 @@ exports.signin = async (userData) => {
         );
 
         if (!isMatch) {
-            throw new Error("Invalid password");
+            throw new Error("Invalid email or password");
         }
 
-        const isAdmin =
-            existingUser.email === process.env.ADMIN_EMAIL;
+        const isAdmin = existingUser.email === process.env.ADMIN_EMAIL;
 
         const token = jwt.sign(
             {
-                userId: existingUser.id,
+                userId: existingUser.id,                   
                 email: existingUser.email,
-                role: isAdmin ? "admin" : existingUser.role
+                role: isAdmin ? "admin" : (existingUser.role || "user")
             },
             process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRES_IN }
+            { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
         );
 
+        const { password, ...safeUser } = existingUser;
 
-        console.log("INPUT:", userData);
-        console.log("FOUND USER:", existingUser);
-        console.log("PASSWORD FROM DB:", existingUser.password);
-        delete existingUser.password;
+        return { user: safeUser, token };
 
-        return { user: existingUser, token };
     } catch (error) {
         throw new Error(`Logging in failed: ${error.message}`);
     }
@@ -149,6 +144,10 @@ exports.getUserById = async (userId) => {
 
 exports.getMe = async (userId) => {
     try {
+        if (!userId) {
+            throw new Error("User ID is required");
+        }
+
         const userInstance = new User();
         const user = await userInstance.findById(userId);
 
@@ -156,10 +155,10 @@ exports.getMe = async (userId) => {
             throw new Error("User not found");
         }
 
-        delete user.password;
+        const { password, ...safeUser } = user;
+        return safeUser;
 
-        return user;
     } catch (error) {
-        throw new Error(`Failed to get user: ${error.message}`);
+        throw new Error(`Get user failed: ${error.message}`);
     }
 };
