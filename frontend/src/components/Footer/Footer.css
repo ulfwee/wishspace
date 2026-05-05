@@ -1,0 +1,8 @@
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  height: 50px;
+}

@@ -1,0 +1,124 @@
+.steps-container {
+    background-color: #262626;
+    color: white;
+    padding: 80px 10%;
+    font-family: sans-serif;
+}
+
+.steps-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.steps-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.steps-header p {
+    color: #a0a0a0;
+}
+
+.steps-content {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.steps-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.step-item {
+    display: flex;
+    gap: 20px;
+}
+
+.step-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #2a3441;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-icon.active {
+    background-color: #385144; 
+    color: #fff;
+}
+
+.step-text h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+}
+
+.step-text p {
+    color: #a0a0a0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.steps-visual {
+    flex: 1.2;
+}
+
+.video-placeholder {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 8px solid #2a3441;
+}
+
+.video-placeholder img {
+    width: 100%;
+    display: block;
+    opacity: 0.8;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.steps-footer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.btn-primary {
+    background-color: #385144;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    width: 300px;
+    font-size: 15px;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}

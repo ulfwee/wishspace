@@ -1,0 +1,40 @@
+.header{
+    color: #364038de;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #383838;
+}
+.header h1{
+    background: linear-gradient(to right, #81de81,#9bbaa2, #abe8b5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-left: 10px;
+}
+.header h1 i{
+    margin-right: 7px;
+    font-size: 37px;
+}
+.header_navbar{
+    display: flex;
+    align-items: center;    
+    gap: 30px;
+}
+.header_login_button{
+    height: 35px;
+    width: 75px;
+    border-radius: 5px;
+    border: 1px solid #395048;
+    color: #7c7b73;
+    font-weight: 800;
+    background-color: transparent;
+}
+.header_login_button:hover{
+    background-color:#5d675f5b;
+    color: rgba(223, 217, 200, 0.914);
+    border: 1px solid rgba(223, 217, 200, 0.504);
+}

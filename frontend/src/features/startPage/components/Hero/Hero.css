@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+.herodiv{
+    background: linear-gradient(to right, #222a22,#303c34, #29342b);
+    background: url('../../../../assets/balloonss.jpg');
+    background-size: cover;
+    opacity: 0.85;
+    height: 650px;
+    display: flex;
+    color: #e6e2e2;
+    animation: 1.5s fadeInUp;
+}
+.hero_text{
+    display: flex;
+    flex-direction: column;
+}
+.main_title{
+    font-size: 60px;
+    max-width: 600px;
+    text-align: center;
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    position: relative;
+    top: 15%;
+    left: 68%;
+    -webkit-text-stroke-color: #002f10;
+    -webkit-text-stroke-width: 1.5px;
+    color: #ebe5df;
+}
+.subtitle{
+    position: relative;
+    top: 17%;
+    left: 60%;
+    font-family: "Lobster", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 22px;
+    text-align: center;
+    max-width: 700px;
+    -webkit-text-stroke-color: #3d3f3e;
+    -webkit-text-stroke-width: 0.5px;
+    color: #d4e3d0f2;
+}
+.buttons{
+    position: relative;
+    top:58%;
+    left: -5%;
+    height: fit-content;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+.work_button{
+    height: 35px;
+    width: 130px;
+    border-radius: 5px;
+    border: 1px solid #494843c2;
+    color: #35342df2;
+    font-weight: 600;
+    background-color: #f0e2d0d5;
+}
+.work_button:hover{
+    background-color: #f0e2d0fe;
+}
