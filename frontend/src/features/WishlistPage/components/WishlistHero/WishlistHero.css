@@ -1,0 +1,109 @@
+.wishlist-hero {
+  background-color: #385144; /* Твій primary */
+  border-radius: 30px;
+  padding: 48px;
+  color: #F8F5F2; /* Твій background як колір тексту */
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(56, 81, 68, 0.15);
+}
+
+.hero-badge {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.hero-text h1 {
+  font-size: 3.2rem;
+  margin: 0 0 12px 0;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  max-width: 520px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.btn-create-collection {
+  background-color: #F8F5F2;
+  color: #385144;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  transition: transform 0.2s, background-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-create-collection:hover {
+  background-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.hero-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.hero-stat-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 20px;
+  transition: background-color 0.3s;
+}
+
+.hero-stat-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.hero-stat-item .stat-number {
+  font-size: 2.6rem;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.hero-stat-item .stat-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Адаптивність для мобільних */
+@media (max-width: 768px) {
+  .hero-main-row {
+    flex-direction: column;
+  }
+  .hero-stats-row {
+    grid-template-columns: 1fr;
+  }
+  .hero-text h1 {
+    font-size: 2.4rem;
+  }
+}

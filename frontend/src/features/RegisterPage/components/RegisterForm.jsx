@@ -1,8 +1,52 @@
 import React, { useState } from 'react';
-import googleLogo from "../../../assets/google.png";
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import api from '../../../api/api';
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
+    username: '',
+    email: '',
+    password: '',
+  });
+
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+        const response = await axios.post(
+            'http://localhost:5000/users/register',
+            formData
+        );
+      
+      localStorage.setItem('token', response.data.token);
+      alert('Реєстрація пройшла успішно! 🎉');
+      navigate('/home');
+
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.error || 'Не вдалося зареєструвати користувача');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-card">
@@ -11,34 +55,67 @@ const RegisterForm = () => {
         <p>Fill in your details to get started</p>
       </div>
 
-      <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+      {error && <p className="error-message" style={{ color: 'red', textAlign: 'center', marginBottom: '15px' }}>{error}</p>}
+
+      <form className="auth-form" onSubmit={handleSubmit}>
         <div className="input-row">
           <div className="input-group">
             <span className="input-icon">👤</span>
-            <input type="text" placeholder="First Name" required />
+            <input 
+              type="text" 
+              name="name"
+              placeholder="First Name" 
+              value={formData.name}
+              onChange={handleChange}
+              required 
+            />
           </div>
 
           <div className="input-group">
             <span className="input-icon">👤</span>
-            <input type="text" placeholder="Last Name" required />
+            <input 
+              type="text" 
+              name="surname"
+              placeholder="Last Name" 
+              value={formData.surname}
+              onChange={handleChange}
+              required 
+            />
           </div>
         </div>
 
         <div className="input-group">
           <span className="input-icon">🧑‍💼</span>
-          <input type="text" placeholder="Username" required />
+          <input 
+            type="text" 
+            name="username"
+            placeholder="Username" 
+            value={formData.username}
+            onChange={handleChange}
+            required 
+          />
         </div>
 
         <div className="input-group">
           <span className="input-icon">✉️</span>
-          <input type="email" placeholder="Email" required />
+          <input 
+            type="email" 
+            name="email"
+            placeholder="Email" 
+            value={formData.email}
+            onChange={handleChange}
+            required 
+          />
         </div>
 
         <div className="input-group">
           <span className="input-icon">🔒</span>
           <input
             type={showPassword ? "text" : "password"}
+            name="password"
             placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
           <button
@@ -50,8 +127,8 @@ const RegisterForm = () => {
           </button>
         </div>
 
-        <button type="submit" className="btn-primary">
-          Create Account
+        <button type="submit" className="btn-primary" disabled={loading}>
+          {loading ? 'Creating Account...' : 'Create Account'}
         </button>
 
         <div className="divider">
@@ -59,10 +136,6 @@ const RegisterForm = () => {
         </div>
 
         <button type="button" className="btn-google">
-          <img 
-            src={googleLogo}
-            alt="Google" 
-          />
           Sign up with Google
         </button>
 

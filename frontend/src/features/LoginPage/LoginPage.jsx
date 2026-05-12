@@ -1,5 +1,4 @@
 import React from 'react';
-import RegisterForm from './components/LoginForm';
 import '../../styles/AuthPages.css';
 import LoginForm from './components/LoginForm';
 

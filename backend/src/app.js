@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const userRoutes = require('./routes/UserRoutes');
 const wishlistRoutes = require('./routes/WishlistRoutes');
 const wishItemRoutes = require('./routes/WishItemRoutes');
@@ -7,6 +8,12 @@ const NotificationRoutes = require('./routes/NotificationRoutes');
 const BookingRoutes = require('./routes/BookingRoutes');
 
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
 app.use(express.json());
 
 app.get('/', (req, res) => {

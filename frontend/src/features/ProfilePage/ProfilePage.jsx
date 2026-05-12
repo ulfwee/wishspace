@@ -1,0 +1,89 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import HomeHeader from '../../components/HomeHeader/HomeHeader';
+import ProfileHero from './components/ProfileHero/ProfileHero';
+import api from '../../api/api';
+import './ProfilePage.css';
+
+const ProfilePage = () => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+        try {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+            alert("You are not logged in");
+            return;
+            }
+
+            const response = await axios.get(
+            'http://localhost:5000/users/me',
+            {
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
+            }
+            );
+
+            setUser(response.data);
+
+        } catch (error) {
+            console.error(error);
+
+            alert(
+            error.response?.data?.error ||
+            "Failed to load profile"
+            );
+        } finally {
+            setLoading(false);
+        }
+        };
+
+        fetchProfile();
+    }, []);
+
+    if (loading) return <div className="loading-screen">Завантаження профілю...</div>;
+    if (error) return <div className="error-message">{error}</div>;
+    if (!user) return <div>Користувач не знайдений</div>;
+    
+    const handleUserUpdate = (updatedUser) => {
+        setUser(updatedUser);
+    };
+
+  return (
+    <div className="profile-page">
+      <HomeHeader activePage="profile" />
+
+      <main className="profile-container">
+        <ProfileHero 
+            user={user} 
+            onUserUpdate={handleUserUpdate} 
+        />
+        
+        <div className="profile-stats">
+          <div className="stat-card">
+            <div className="stat-icon">🎁</div>
+            <div className="stat-number">5</div>
+            <div className="stat-label">Wishlists</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon">👥</div>
+            <div className="stat-number">{user.friends?.length || 0}</div>
+            <div className="stat-label">Friends</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon">📅</div>
+            <div className="stat-number">8</div>
+            <div className="stat-label">Events</div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default ProfilePage;

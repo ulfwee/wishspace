@@ -1,0 +1,85 @@
+.friend-card {
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: box-shadow 0.3s;
+}
+
+.friend-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.friend-card-header {
+  height: 80px;
+  background-color: #C2D8C4; /* Світло-зелений акцент */
+  position: relative;
+}
+
+.friend-avatar-large {
+  width: 64px;
+  height: 64px;
+  background: white;
+  border: 4px solid white;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #385144;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.friend-card-body {
+  padding: 45px 20px 24px;
+}
+
+.friend-card-body h3 {
+  margin: 0;
+  color: #385144;
+}
+
+.friend-stats {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.stat-box {
+  flex: 1;
+  background: #F9FAFB;
+  padding: 12px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-box .val {
+  font-weight: 800;
+  color: #385144;
+}
+
+.stat-box .lab {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+}
+
+.btn-message {
+  width: 100%;
+  padding: 10px;
+  background: #F3F4F6;
+  border: none;
+  border-radius: 12px;
+  color: #385144;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

@@ -1,0 +1,74 @@
+.profile-page {
+  background-color: #F8F5F2;
+  min-height: 100vh;
+}
+
+.profile-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* ====================== STATS SECTION ====================== */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 24px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(56, 81, 68, 0.05);
+  border: 1px solid #F0F0F0; 
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(56, 81, 68, 0.15);
+}
+
+.stat-card:nth-child(1) .stat-icon { color: #385144; }
+
+.stat-icon {
+  font-size: 1.8rem;
+  color: #385144;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #385144;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  color: #8c92ac;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px 16px;
+  }
+
+  .stat-card {
+    padding: 24px 16px;
+  }
+
+  .stat-number {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+}
