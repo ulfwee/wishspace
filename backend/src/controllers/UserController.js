@@ -32,12 +32,30 @@ exports.loginUser = async (req, res) => {
 }
 
 exports.updateUser = async (req, res) => {
-    try{
-        const {id} = req.params;
-        const updatedUser = await UserService.updateExistingUser(id, req.body);
-        res.status(200).json({message: "Updated successfully", data: updatedUser});
-    }catch(error){
-        res.status(400).json({error: error.message});
+    try {
+        const { id } = req.params;
+        const userIdFromToken = req.user.userId;  
+
+        if (id !== userIdFromToken && req.user.role !== 'admin') {
+            return res.status(403).json({ error: "You can only update your own profile" });
+        }
+
+        const updateData = { ...req.body };
+
+        delete updateData.password;
+        delete updateData.role;     
+
+        const updatedUser = await UserService.updateExistingUser(id, updateData);
+
+        const { password, ...safeUser } = updatedUser;
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            data: safeUser
+        });
+    } catch (error) {
+        console.error("Update error:", error);
+        res.status(400).json({ error: error.message });
     }
 };
 
