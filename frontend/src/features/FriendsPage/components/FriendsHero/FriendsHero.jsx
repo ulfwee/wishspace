@@ -1,29 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FriendsHero.css';
 
-const FriendsHero = ({ connectionsCount = 4 }) => {
-  return (
-    <section className="friends-hero">
-      <div className="hero-top-row">
-        <div className="hero-badge">
-          👥 {connectionsCount} Connections
-        </div>
-      </div>
+const FriendsHero = ({ onSearch }) => {
+    const [search, setSearch] = useState('');
 
-      <div className="hero-main-content">
-        <h1>Your Circle</h1>
-        <p>Celebrate together, share joy, and make every moment meaningful</p>
-      </div>
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') onSearch(search);
+    };
 
-      <div className="search-container">
-        <span className="search-icon">🔍</span>
-        <input 
-          type="text" 
-          placeholder="Search connections..." 
-        />
-      </div>
-    </section>
-  );
+    return (
+        <section className="friends-hero">
+            <div className="hero-content">
+                <h1>Discover People</h1>
+                <p>Connect with friends and explore their curated wishlists</p>
+                
+                <div className="search-bar-container">
+                    <span className="search-icon" onClick={() => onSearch(search)}>🔍</span>
+                    <input
+                        type="text"
+                        placeholder="Search by username..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default FriendsHero;

@@ -1,11 +1,20 @@
 const BookingService = require('../services/BookingService');
 
 exports.bookItem = async (req, res) => {
-    const data = await BookingService.bookItem({
-        ...req.body,
-        bookerId: req.user.id
-    });
-    res.json(data);
+    try {
+        const { id } = req.params; 
+        const bookData = {
+            itemId: id,
+            bookerId: req.user.uid, 
+            ownerId: req.body.ownerId,
+            isAnonymous: req.body.isAnonymous || false
+        };
+
+        const result = await BookingService.bookItem(bookData);
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 };
 
 exports.getUserBookings = async (req, res) => {

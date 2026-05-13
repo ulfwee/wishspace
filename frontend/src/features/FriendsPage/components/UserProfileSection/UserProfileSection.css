@@ -1,0 +1,75 @@
+.user-profile-section {
+    background: #ffffff;
+    border-radius: 30px;
+    padding: 32px;
+    margin: -40px 0 40px 0; /* Накладається на Hero */
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(56, 81, 68, 0.1);
+    border: 1px solid #C2D8C4;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: #C2D8C4;
+    color: #385144;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.btn-send-request {
+    background: #385144;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.wishlists-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.mini-wishlist-card {
+    min-width: 260px;
+    background: #F8F5F2;
+    padding: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.mini-wishlist-card:hover {
+    border-color: #385144;
+    transform: translateY(-5px);
+}
+
+.view-link {
+    color: #385144;
+    font-weight: 700;
+    font-size: 0.9rem;
+}

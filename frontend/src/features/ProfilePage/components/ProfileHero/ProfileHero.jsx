@@ -47,30 +47,31 @@ const ProfileHero = ({ user, onUserUpdate }) => {
     };
   return (
     <>
-      <div className="profile-hero">
-        <div className="profile-content-wrapper">
-          <div className="profile-avatar-container">
-            <div className="profile-avatar">
-              {user?.avatarUrl ? (
-                <img 
-                  src={user.avatarUrl} 
-                  alt="Avatar" 
-                  style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
-                />
-              ) : (
-                initials
-              )}
-            </div>
-          </div>
+      <div className="profile-hero-card">
+        {/* Верхній банер */}
+        <div className="profile-banner"></div>
 
-          <div className="profile-info">
-            <h1 className="profile-name">
-              {user?.name} {user?.surname}
-            </h1>
-            <p className="profile-email">{user?.email}</p>
-            <p className="profile-bio">
-              {user?.bio || '✨ Making gift-giving magical since 2024'}
-            </p>
+        <div className="profile-content-wrapper">
+          <div className="profile-main-info">
+            <div className="profile-avatar-container">
+              <div className="profile-avatar">
+                {user?.avatarUrl ? (
+                  <img src={user.avatarUrl} alt="Avatar" />
+                ) : (
+                  initials
+                )}
+              </div>
+            </div>
+
+            <div className="profile-text-details">
+              <h1 className="profile-name">
+                {user?.name} {user?.surname || user?.username}
+              </h1>
+              <p className="profile-email">{user?.email}</p>
+              <p className="profile-bio">
+                {user?.bio || '✨ Making gift-giving magical since 2024'}
+              </p>
+            </div>
           </div>
 
           <button 

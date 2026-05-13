@@ -1,25 +1,55 @@
 const FriendRequest = require('../models/FriendRequest');
+const User = require('../models/User');
 
-exports.sendRequest = async (data) => {
-    const instance = new FriendRequest({
-        ...data,
-        status: "pending"
+exports.acceptRequest = async (requestId) => {
+
+    const requestModel = new FriendRequest();
+
+    // отримуємо заявку
+    const request = await requestModel.findById(requestId);
+
+    if (!request) {
+        throw new Error("Request not found");
+    }
+
+    // змінюємо статус
+    await requestModel.update(requestId, {
+        status: "accepted"
     });
 
-    return await instance.create(instance.toData());
-};
+    // users
+    const userModel = new User();
 
-exports.acceptRequest = async (id) => {
-    const instance = new FriendRequest();
-    return await instance.update(id, { status: "accepted" });
-};
+    // sender
+    const sender = await userModel.findById(
+        request.senderId
+    );
 
-exports.rejectRequest = async (id) => {
-    const instance = new FriendRequest();
-    return await instance.update(id, { status: "declined" });
-};
+    // receiver
+    const receiver = await userModel.findById(
+        request.receiverId
+    );
 
-exports.getIncomingRequests = async (userId) => {
-    const instance = new FriendRequest();
-    return await instance.findByField("receiverId", userId);
+    // якщо friends немає
+    sender.friends = sender.friends || [];
+    receiver.friends = receiver.friends || [];
+
+    // додаємо друзів
+    sender.friends.push(request.receiverId);
+
+    receiver.friends.push(request.senderId);
+
+    // update sender
+    await userModel.update(sender.uid, {
+        friends: sender.friends
+    });
+
+    // update receiver
+    await userModel.update(receiver.uid, {
+        friends: receiver.friends
+    });
+
+    return {
+        message: "Friend request accepted"
+    };
 };

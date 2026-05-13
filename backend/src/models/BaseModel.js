@@ -103,15 +103,10 @@ async findOneByField(field, value){
         return doc.exists ? { id: doc.id, ...doc.data() } : null;
     }
 
-    validateBool(value) {
-        const allowed = ["true", "false"];
-
-        if (!allowed.includes(value)) {
-            return "false"; 
-        }
-
-        return value;
-    }
+   validateBool(value) {
+    if (value === true || value === "true" || value === 1) return true;
+    return false; // все інше = false
+}
 }
 
 module.exports = BaseModel;

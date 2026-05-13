@@ -1,30 +1,32 @@
-.profile-hero {
-  background: white; /* Основний фон картки */
+.profile-hero-card {
+  background: white;
   border-radius: 28px;
-  overflow: hidden; /* Щоб банер не вилазив за краї */
-  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(56, 81, 68, 0.08);
   margin-bottom: 30px;
-  box-shadow: 0 10px 40px rgba(56, 81, 68, 0.05);
-  display: flex;
-  flex-direction: column; /* Змінюємо на колонку */
+  border: 1px solid #C2D8C4; /* Легкий акцентний бордюр */
 }
 
-/* Верхній кольоровий банер */
-.profile-hero::before {
-  content: "";
-  display: block;
-  height: 160px; /* Висота градієнту */
-  background: linear-gradient(135deg, #385144, #C2D8C4);
+/* Банер як на скріншоті */
+.profile-banner {
+  height: 180px;
+  background: linear-gradient(135deg, #385144 0%, #4a6b5a 100%);
   width: 100%;
 }
 
 .profile-content-wrapper {
-  padding: 0 40px 40px;
+  padding: 0 40px 30px;
+  display: flex;
+  justify-content: space-between; /* Кнопка праворуч, інфо ліворуч */
+  align-items: flex-end; /* Вирівнювання по нижній лінії */
+  margin-top: -60px; /* Піднімаємо контент на банер */
+  position: relative;
+}
+
+.profile-main-info {
   display: flex;
   align-items: flex-end;
-  gap: 30px;
-  margin-top: -60px; /* Підіймаємо контент на банер */
-  position: relative;
+  gap: 24px;
 }
 
 .profile-avatar-container {
@@ -32,90 +34,97 @@
 }
 
 .profile-avatar {
-  width: 160px;
-  height: 160px;
-  background: linear-gradient(135deg, #C2D8C4, #385144);
-  color: white;
-  font-size: 3.5rem;
-  font-weight: 700;
+  width: 150px;
+  height: 150px;
+  background: #F8F5F2; /* Світлий фон якщо немає фото */
+  color: #385144;
+  font-size: 3rem;
+  font-weight: 800;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 5px solid white; /* Біла обводка як у прикладі */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 6px solid white; /* Товста біла обводка */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
 }
 
-.edit-avatar-btn {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  width: 42px;
-  height: 42px;
-  background: #385144; /* Колір кнопки в колір теми */
-  color: white;
-  border: 3px solid white;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.profile-info {
-  flex: 1;
+.profile-text-details {
   padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .profile-name {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #385144;
   margin: 0 0 4px 0;
 }
 
 .profile-email {
-  color: #6b7280;
-  font-size: 1rem;
-  margin-bottom: 8px;
+  color: #9CA3AF;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
 }
 
 .profile-bio {
-  color: #4b5563;
+  color: #4B5563;
   font-size: 0.95rem;
+  max-width: 500px;
 }
 
+/* Кнопка редагування */
 .btn-edit-profile {
-  background: #F8F5F2;
-  color: #385144;
-  border: 1px solid #e5e7eb;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-weight: 600;
+  background: #385144;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  align-self: center; /* Центруємо кнопку по вертикалі відносно інфо */
+  gap: 10px;
+  transition: all 0.2s ease;
   margin-bottom: 10px;
-  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(56, 81, 68, 0.2);
 }
 
 .btn-edit-profile:hover {
-  background: #C2D8C4;
-  border-color: #385144;
+  transform: translateY(-2px);
+  background: #2d4136;
+  box-shadow: 0 6px 15px rgba(56, 81, 68, 0.3);
 }
 
-@media (max-width: 768px) {
+/* Адаптивність для мобільних */
+@media (max-width: 850px) {
   .profile-content-wrapper {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: -80px;
+    margin-top: -75px;
+    gap: 20px;
   }
-  
+
+  .profile-main-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .profile-avatar {
+    width: 140px;
+    height: 140px;
+  }
+
   .btn-edit-profile {
-    align-self: center;
+    width: 100%;
+    justify-content: center;
   }
 }

@@ -12,8 +12,7 @@ class WishItem extends BaseModel{
         this.imgURL = itemData.imgURL || "";
         this.priority = this.validatePriority(itemData.priority);
         this.wishlistId = itemData.wishlistId || null;
-        this.isBooked = this.validateBool(itemData.isBooked);
-    }
+        this.isBooked = this.validateBool(itemData.isBooked);    }
 
     validatePriority(value) {
         const allowed = ["low", "medium", "high"];

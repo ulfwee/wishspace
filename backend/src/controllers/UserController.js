@@ -88,3 +88,53 @@ exports.getMe = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+exports.searchByUsername = async (req, res) => {
+
+    try {
+
+        const result = await UserService.findByUsername(
+            req.params.username
+        );
+
+        if (!result) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+
+        res.json(result);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};
+
+exports.getUserById = async (req, res) => {
+
+    try {
+
+        const result = await UserService.findById(
+            req.params.id
+        );
+
+        if (!result) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+
+        res.json(result);
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};

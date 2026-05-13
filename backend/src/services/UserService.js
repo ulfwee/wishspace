@@ -162,3 +162,23 @@ exports.getMe = async (userId) => {
         throw new Error(`Get user failed: ${error.message}`);
     }
 };
+
+exports.findByUsername = async (username) => {
+
+    const instance = new User();
+
+    const users = await instance.getDataAll();
+
+    return users.find(
+        user =>
+            user.username.toLowerCase() ===
+            username.toLowerCase()
+    );
+};
+
+exports.findById = async (id) => {
+
+    const instance = new User();
+
+    return await instance.findById(id);
+};

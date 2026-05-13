@@ -8,10 +8,24 @@ const role = require('../middleware/roleMiddleware');
 router.post('/register', userController.registerUser);
 router.post("/login", userController.loginUser);
 router.get('/me', auth, userController.getMe);
+const UserController = require('../controllers/UserController');
 
+router.get(
+    '/search/:username',
+    auth,
+    UserController.searchByUsername
+);
+router.get('/:userId/wishlists', WishlistController.getUserWishlists);
+router.get(
+    '/:id',
+    auth,
+    UserController.getUserById
+);
+
+module.exports = router;
 router.get('/', auth, role("admin"), userController.getUsersAll);
 router.get('/:id', userController.getUser);
-router.get('/:userId/wishlists', WishlistController.getUserWishlists);
+
 
 router.put('/:id', auth, userController.updateUser);
 router.delete('/:id', auth, role("admin"), userController.deleteUser);

@@ -55,23 +55,7 @@ const ProfilePage = () => {
                     onUserUpdate={handleUserUpdate}     // ← ОБОВ'ЯЗКОВО передати!
                 />
                 
-                <div className="profile-stats">
-                    <div className="stat-card">
-                        <div className="stat-icon">🎁</div>
-                        <div className="stat-number">5</div>
-                        <div className="stat-label">Wishlists</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-icon">👥</div>
-                        <div className="stat-number">{user.friends?.length || 0}</div>
-                        <div className="stat-label">Friends</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-icon">📅</div>
-                        <div className="stat-number">8</div>
-                        <div className="stat-label">Events</div>
-                    </div>
-                </div>
+                
             </main>
         </div>
     );

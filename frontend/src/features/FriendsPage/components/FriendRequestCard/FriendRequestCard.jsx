@@ -1,22 +1,57 @@
 import React from 'react';
 import './FriendRequestCard.css';
 
-const FriendRequestCard = ({ name, username, bio, mutualCount }) => {
+const FriendRequestCard = ({
+  request,
+  onAccept,
+  onReject
+}) => {
+
   return (
     <div className="request-card">
+
       <div className="request-info">
-        <div className="request-avatar">{name.charAt(0)}</div>
-        <div className="request-details">
-          <h4>{name}</h4>
-          <span className="username">@{username}</span>
-          <p className="bio">{bio}</p>
-          <span className="mutual">👥 {mutualCount} mutual friends</span>
+
+        <div className="request-avatar">
+          {request.senderId?.charAt(0)}
         </div>
+
+        <div className="request-details">
+
+          <h4>
+            {request.senderUsername || request.senderId}
+          </h4>
+
+          <span className="username">
+            @{request.senderUsername || 'user'}
+          </span>
+
+          <span className="mutual">
+            👥 Friend request
+          </span>
+
+        </div>
+
       </div>
+
       <div className="request-actions">
-        <button className="btn-accept">✓ Accept</button>
-        <button className="btn-decline">✕ Decline</button>
+
+        <button
+          className="btn-accept"
+          onClick={() => onAccept(request.uid)}
+        >
+          ✓ Accept
+        </button>
+
+        <button
+          className="btn-decline"
+          onClick={() => onReject(request.uid)}
+        >
+          ✕ Decline
+        </button>
+
       </div>
+
     </div>
   );
 };

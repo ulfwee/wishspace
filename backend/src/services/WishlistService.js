@@ -79,3 +79,15 @@ exports.getWishlistById = async (id) => {
         throw new Error(`Get wishlist failed: ${error.message}`);
     }
 };
+
+exports.getByUserId = async (userId) => {
+
+    const wishlistInstance = new Wishlist();
+
+    const allWishlists =
+        await wishlistInstance.getDataAll();
+
+    return allWishlists.filter(
+        wishlist => wishlist.userId == userId
+    );
+};
