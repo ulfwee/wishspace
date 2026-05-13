@@ -1,55 +1,101 @@
 const FriendRequest = require('../models/FriendRequest');
 const User = require('../models/User');
 
-exports.acceptRequest = async (requestId) => {
-
-    const requestModel = new FriendRequest();
-
-    // отримуємо заявку
-    const request = await requestModel.findById(requestId);
-
-    if (!request) {
-        throw new Error("Request not found");
+exports.sendRequest = async (senderId, receiverId) => {
+    if (!senderId || !receiverId) {
+        throw new Error("senderId and receiverId are required");
+    }
+    if (senderId === receiverId) {
+        throw new Error("You cannot add yourself");
     }
 
-    // змінюємо статус
-    await requestModel.update(requestId, {
-        status: "accepted"
-    });
-
-    // users
+    const requestModel = new FriendRequest();
     const userModel = new User();
 
-    // sender
-    const sender = await userModel.findById(
-        request.senderId
-    );
+    // Перевірка, чи вже друзі
+    const sender = await userModel.findById(senderId);
+    const receiver = await userModel.findById(receiverId);
 
-    // receiver
-    const receiver = await userModel.findById(
-        request.receiverId
-    );
+    if (!sender || !receiver) {
+        throw new Error("User not found");
+    }
 
-    // якщо friends немає
+    if (sender.friends?.includes(receiverId) || receiver.friends?.includes(senderId)) {
+        throw new Error("You are already friends");
+    }
+
+    // Перевірка на існуючий запит
+    const existing = await requestModel.collection
+        .where('senderId', '==', senderId)
+        .where('receiverId', '==', receiverId)
+        .get();
+
+    if (!existing.empty) {
+        throw new Error("Request already sent");
+    }
+
+    const newRequest = new FriendRequest({
+        senderId,
+        receiverId,
+        status: "pending"
+    });
+
+    return await requestModel.create(newRequest.toData());
+};
+
+exports.getIncomingRequests = async (userId) => {
+    if (!userId) {
+        throw new Error("User ID is required");
+    }
+
+    const requestModel = new FriendRequest();
+    const userModel = new User();
+
+    const requests = await requestModel.findByField('receiverId', userId);
+    
+    const enrichedRequests = await Promise.all(requests.map(async (req) => {
+        const sender = await userModel.findById(req.senderId);
+        return {
+            ...req,
+            senderUsername: sender ? sender.username : "Unknown",
+            uid: req.id 
+        };
+    }));
+
+    return enrichedRequests.filter(req => req.status === 'pending');
+};
+
+exports.acceptRequest = async (requestId) => {
+    const requestModel = new FriendRequest();
+    const userModel = new User();
+
+    const request = await requestModel.findById(requestId);
+    if (!request) throw new Error("Request not found");
+
+    const sender = await userModel.findById(request.senderId);
+    const receiver = await userModel.findById(request.receiverId);
+
+    if (!sender || !receiver) throw new Error("User not found");
+
     sender.friends = sender.friends || [];
     receiver.friends = receiver.friends || [];
 
-    // додаємо друзів
-    sender.friends.push(request.receiverId);
+    if (sender.friends.includes(request.receiverId) || receiver.friends.includes(request.senderId)) {
+        throw new Error("Users are already friends");
+    }
 
+    await requestModel.update(requestId, { status: "accepted" });
+
+    sender.friends.push(request.receiverId);
     receiver.friends.push(request.senderId);
 
-    // update sender
-    await userModel.update(sender.uid, {
-        friends: sender.friends
-    });
+    await userModel.update(sender.id || sender.uid, { friends: sender.friends });
+    await userModel.update(receiver.id || receiver.uid, { friends: receiver.friends });
 
-    // update receiver
-    await userModel.update(receiver.uid, {
-        friends: receiver.friends
-    });
+    return { message: "Friend request accepted" };
+};
 
-    return {
-        message: "Friend request accepted"
-    };
+exports.rejectRequest = async (requestId) => {
+    const requestModel = new FriendRequest();
+    return await requestModel.delete(requestId);
 };

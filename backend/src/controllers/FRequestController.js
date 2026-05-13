@@ -1,74 +1,59 @@
 const FriendService = require('../services/FRequestService');
 
 exports.sendRequest = async (req, res) => {
-
     try {
+        const senderId = req.user?.userId;   
 
-        const result = await FriendService.sendRequest(
-            req.user.id,
-            req.body.receiverId
-        );
+        if (!senderId) {
+            return res.status(401).json({ message: "Authentication failed - userId not found" });
+        }
 
+        const { receiverId } = req.body;
+
+        if (!receiverId) {
+            return res.status(400).json({ message: "receiverId is required" });
+        }
+
+        const result = await FriendService.sendRequest(senderId, receiverId);
         res.status(201).json(result);
 
     } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
-    }
-};
-
-exports.accept = async (req, res) => {
-
-    try {
-
-        const result = await FriendService.acceptRequest(req.params.id);
-
-        res.json(result);
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
-    }
-};
-
-exports.reject = async (req, res) => {
-
-    try {
-
-        const result = await FriendService.rejectRequest(req.params.id);
-
-        res.json(result);
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
+        console.error("Send request error:", error);
+        res.status(400).json({ message: error.message });
     }
 };
 
 exports.getRequests = async (req, res) => {
-
     try {
+        const userId = req.user?.userId;   
 
-        const result = await FriendService.getIncomingRequests(
-            req.user.id
-        );
+        if (!userId) {
+            return res.status(401).json({ message: "Authentication failed - userId not found" });
+        }
 
+        const result = await FriendService.getIncomingRequests(userId);
         res.json(result);
 
     } catch (error) {
+        console.error("Get requests error:", error);
+        res.status(400).json({ message: error.message });
+    }
+};
 
-        res.status(400).json({
-            message: error.message
-        });
+exports.accept = async (req, res) => {
+    try {
+        const result = await FriendService.acceptRequest(req.params.id);
+        res.json(result);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
 
+exports.reject = async (req, res) => {
+    try {
+        const result = await FriendService.rejectRequest(req.params.id);
+        res.json(result);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };

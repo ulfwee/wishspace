@@ -27,7 +27,7 @@ app.use('/wishlist', wishlistRoutes);
 
 app.use('/', wishItemRoutes);
 
-app.use('/', FRequestRoutes);
+app.use('/friends', FRequestRoutes);
 
 app.use('/', NotificationRoutes);
 
