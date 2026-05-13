@@ -63,13 +63,40 @@ class BaseModel{
     }
 
     async findByField(field, value){
-        const found = await this.collection.where(field, '==', value).get();
+    try{
+        const snapshot = await this.collection.where(field, '==', value).get();
 
-        if(found.empty) return null;
+        if(snapshot.empty){
+            return [];
+        }
 
-        const doc = found.docs[0];
-        return { id: doc.id, ...doc.data() };
+        return snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+    }catch(error){
+        throw new Error(`Error finding documents: ${error.message}`);
     }
+}
+
+async findOneByField(field, value){
+    try{
+        const snapshot = await this.collection.where(field, '==', value).get();
+
+        if(snapshot.empty){
+            return null;
+        }
+
+        const doc = snapshot.docs[0];
+
+        return {
+            id: doc.id,
+            ...doc.data()
+        };
+    }catch(error){
+        throw new Error(`Error finding document: ${error.message}`);
+    }
+}
 
     async findById(id){
         const doc = await this.collection.doc(id).get();

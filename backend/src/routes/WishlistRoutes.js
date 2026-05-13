@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 const role = require('../middleware/roleMiddleware');
 
 router.get('/', auth, WishlistController.getWishlists);
+router.get('/:id', auth, WishlistController.getWishlistById);
 
 router.post('/', auth, WishlistController.createWishlist);
 

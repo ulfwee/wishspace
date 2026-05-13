@@ -72,3 +72,19 @@ exports.getUserWishlists = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+
+exports.getWishlistById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const wishlist = await WishlistService.getWishlistById(id);
+        
+        if (!wishlist) {
+            return res.status(404).json({ error: "Wishlist not found" });
+        }
+
+        res.status(200).json({ wishlist });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};

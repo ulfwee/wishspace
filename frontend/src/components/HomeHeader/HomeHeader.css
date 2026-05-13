@@ -1,75 +1,91 @@
 .home-header {
+  /* Фіксуємо хедер зверху */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px; /* Великі відступи як на першому скрині */
-  height: 70px;
+  padding: 0 80px; /* Трохи збільшив відступи для "преміального" вигляду */
+  height: 72px;
   background-color: #ffffff;
-  border-bottom: 1px solid rgba(194, 216, 196, 0.3);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(56, 81, 68, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #385144; /* Твій темно-зелений */
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #385144;
   text-decoration: none;
+  flex: 1; /* Даємо логотипу простір зліва */
 }
 
 .logo-square {
   background-color: #385144;
-  color: #ffffff;
-  width: 32px;
-  height: 32px;
+  color: #F8F5F2;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  font-size: 1.1rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
 }
 
 .header-nav {
   display: flex;
-  gap: 35px;
+  gap: 40px;
+  height: 100%; /* Навігація на всю висоту для лінії */
+  align-items: center;
+  flex: 2;
+  justify-content: center;
 }
 
 .nav-item {
-  color: #6B7280;
+  color: #88928d; /* М'якший колір для неактивних */
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: color 0.2s;
-  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .nav-item:hover {
   color: #385144;
 }
 
-/* Стиль для активної сторінки */
 .nav-item.active {
   color: #385144;
-  position: relative;
 }
 
+/* Виправлена лінія під активним елементом */
 .nav-item.active::after {
   content: '';
   position: absolute;
-  bottom: -24px; /* Притискаємо лінію до низу хедеру */
+  bottom: 0; /* Рівно по нижньому краю хедера */
   left: 0;
   width: 100%;
-  height: 3px;
+  height: 4px;
   background-color: #385144;
-  border-radius: 3px 3px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  flex: 1;
+  justify-content: flex-end; /* Дії зміщуємо вправо */
 }
 
 .theme-btn {
@@ -77,19 +93,30 @@
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 5px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.theme-btn:hover {
+  background-color: #f0f2f0;
 }
 
 .user-profile-circle {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   background-color: #C2D8C4;
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: border 0.2s;
+  transition: all 0.2s ease;
+  background-image: url('placeholder-avatar.png'); /* Додайте фон, якщо є фото */
+  background-size: cover;
 }
 
 .user-profile-circle:hover {
+  transform: scale(1.05);
   border-color: #385144;
 }

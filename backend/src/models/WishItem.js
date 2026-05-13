@@ -25,6 +25,8 @@ class WishItem extends BaseModel{
         return value;
     }
 
+    
+
     toData() {
         return {
             title: this.title,

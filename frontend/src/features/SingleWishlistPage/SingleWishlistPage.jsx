@@ -6,6 +6,7 @@ import HomeHeader from '../../components/HomeHeader/HomeHeader';
 import WishlistHero from './components/WishlistHero/WishlistHero';
 import FilterBar from './components/FilterBar/FilterBar';
 import GiftCard from './components/GiftCard/GiftCard';
+import AddItemModal from './components/AddItemModal/AddItemModal';
 
 import './SingleWishlistPage.css';
 
@@ -13,65 +14,99 @@ const SingleWishlistPage = () => {
   const { id } = useParams(); 
   const navigate = useNavigate();
   
+  const [isModalOpen, setIsModalOpen] = useState(false); // Стан модалки
   const [wishlist, setWishlist] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchWishlistData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`http://localhost:5000/wishlists/${id}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        });
-        
-        setWishlist(response.data);
-      } catch (err) {
-        setError('Не вдалося завантажити список бажань');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  
+    useEffect(() => {
+  const fetchWishlistData = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
 
-    if (id) fetchWishlistData();
-  }, [id]);
+      const [wishlistRes, itemsRes] = await Promise.all([
+    axios.get(`http://localhost:5000/wishlist/${id}`, { headers }),
+    axios.get(`http://localhost:5000/wishlists/${id}/items`, { headers })
+]);
 
-  if (loading) return <div className={styles.loader}>Завантаження...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
+      // ТУТ МАГІЯ:
+      // Якщо itemsRes.data — це об'єкт, а не масив, перетворюємо його на масив
+      const itemsData = Array.isArray(itemsRes.data) 
+        ? itemsRes.data 
+        : (itemsRes.data ? [itemsRes.data] : []); 
+
+      setWishlist({
+    wishlistInfo: wishlistRes.data.wishlist,
+    items: itemsData
+});
+      
+    } catch (err) {
+      setError('Не вдалося завантажити дані');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (id) fetchWishlistData();
+}, [id]);
+
+const handleItemAdded = (newItem) => {
+    setWishlist(prev => ({
+        ...prev,
+        items: [...(prev.items || []), newItem]
+    }));
+};
+
+  if (loading) return <div className="loader">Завантаження...</div>;
+  if (error) return <div className="error">{error}</div>;
   if (!wishlist) return <div>Список не знайдено</div>;
 
-  const totalItems = wishlist.items?.length || 0;
-  const reservedItems = wishlist.items?.filter(item => item.isReserved).length || 0;
+  const wishlistData = wishlist?.wishlistInfo || {};
+const items = wishlist?.items || [];
+const reservedItems = items.filter(item => 
+  item.isBooked === true || item.isBooked === "true"
+).length;
+  // Розрахунки робимо ТІЛЬКИ якщо завантаження завершено
+  const totalItems = items.length;
   const progress = totalItems > 0 ? Math.round((reservedItems / totalItems) * 100) : 0;
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className="pageWrapper">
       <HomeHeader />
       
-      <main className={styles.content}>
-        <button onClick={() => navigate(-1)} className={styles.backBtn}>
-          ← Назад до списків
-        </button>
+      <main className="content">
 
         <WishlistHero 
-          title={wishlist.title} 
-          date={wishlist.date} 
-          progress={progress} 
-          itemCount={totalItems} 
-          reservedCount={reservedItems} 
-          privacy={wishlist.privacy}
+          title={wishlistData.title} 
+        date={wishlistData.date} 
+        privacy={wishlistData.privacy}
+        progress={progress} 
+        itemCount={totalItems} 
+        reservedCount={reservedItems} 
+        onAddClick={() => setIsModalOpen(true)}
+        onBack={() => navigate('/wishlists')}
         />
+
+        <AddItemModal 
+                    isOpen={isModalOpen} 
+                    onClose={() => setIsModalOpen(false)}
+                    onItemAdded={handleItemAdded}
+                    wishlistId={id}
+                    token={localStorage.getItem('token')}
+                />
 
         <FilterBar />
 
-        <div className={styles.grid}>
-          {wishlist.items && wishlist.items.length > 0 ? (
-            wishlist.items.map(gift => (
-              <GiftCard key={gift._id} gift={gift} />
+        <div className="grid">
+          {items.length > 0 ? (
+            items.map(gift => (
+              <GiftCard key={gift.id || gift._id} gift={gift} />
             ))
           ) : (
-            <p className={styles.emptyMsg}>У цьому списку поки немає подарунків.</p>
+            <p className="emptyMsg">У цьому списку поки немає подарунків.</p>
           )}
         </div>
       </main>

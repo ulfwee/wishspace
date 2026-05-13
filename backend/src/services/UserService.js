@@ -19,7 +19,7 @@ exports.register = async (userData) => {
 
         const userInstance = new User();
 
-        const existingUser = await userInstance.findByField("email", userData.email);
+        const existingUser = await userInstance.findOneByField("email", userData.email);
         if (existingUser) {
             throw new Error("User already exists");
         }
@@ -64,7 +64,7 @@ exports.signin = async (userData) => {
         }
 
         const userInstance = new User();
-        const existingUser = await userInstance.findByField("email", userData.email);
+        const existingUser = await userInstance.findOneByField("email", userData.email);
         
         if (!existingUser) {
             console.log("User not found by email");

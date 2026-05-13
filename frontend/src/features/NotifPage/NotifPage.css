@@ -4,6 +4,7 @@ body{
 .notifications-page {
   background-color: #F8F5F2;
   min-height: 100vh;
+  padding-top: 100px;
 }
 
 .notifications-container {

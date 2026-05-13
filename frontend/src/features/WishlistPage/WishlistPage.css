@@ -2,6 +2,7 @@
   background-color: #F8F5F2; /* Твій background */
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
+  padding-top: 100px;
 }
 
 .wishlists-main-content {

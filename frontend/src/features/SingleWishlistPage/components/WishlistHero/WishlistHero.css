@@ -1,67 +1,152 @@
 .heroSection {
-  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-.topLine {
+/* Верхній ряд: Назва зліва, кнопка справа */
+.heroTop {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 800;
-  margin: 0.5rem 0;
-}
-
-.date {
   color: #385144;
-  opacity: 0.7;
-  font-size: 0.9rem;
+  margin: 0;
 }
 
+.birthdayEmoji {
+  font-size: 2rem;
+}
+
+.editBtn {
+  background: #f0f2f0;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Кнопка Add Item */
 .addButton {
   background-color: #385144;
   color: #F8F5F2;
-  padding: 0.8rem 1.5rem;
+  padding: 12px 24px;
   border-radius: 12px;
   border: none;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s;
 }
 
 .addButton:hover {
   transform: translateY(-2px);
-  filter: brightness(1.1);
+  filter: brightness(1.2);
+}
+
+/* Статистика */
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: -5px;
+}
+
+.privacyBadge {
+  background-color: #C2D8C4;
+  color: #385144;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.statsText {
+  color: #385144;
+  opacity: 0.8;
+  font-size: 0.95rem;
 }
 
 /* Прогрес бар */
-.progressWrapper {
-  margin-top: 2rem;
+.progressSection {
+  margin-top: 10px;
 }
 
-.progressLabel {
+.progressLabels {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
+  margin-bottom: 8px;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
+  color: #385144;
   letter-spacing: 0.5px;
 }
 
-.track {
+.progressTrack {
   width: 100%;
   height: 10px;
-  background-color: #C2D8C4;
-  border-radius: 20px;
+  background-color: #e8ebe9;
+  border-radius: 10px;
   overflow: hidden;
 }
 
-.fill {
+.progressFill {
   height: 100%;
   background-color: #385144;
-  transition: width 0.4s ease-out;
+  border-radius: 10px;
+  transition: width 0.5s ease-out;
 }
+.heroSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-top: 20px; /* Додаємо простір зверху */
+}
+
+/* Стиль для круглої стрілки як на макеті */
+.backArrowBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #385144;
+  cursor: pointer;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.backArrowBtn:hover {
+  transform: translateX(-4px);
+}
+
+.heroTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap; /* Щоб кнопка Add Item не стрибала вниз */
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* Решта твоїх стилів залишається без змін */

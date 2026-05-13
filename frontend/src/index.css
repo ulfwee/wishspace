@@ -4,3 +4,9 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 };
+body {
+  margin: 0;
+  background-color: #F8F5F2; /* Світлий бежевий з палітри */
+  color: #385144;
+  font-family: 'Inter', sans-serif;
+}

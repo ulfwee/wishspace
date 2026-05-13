@@ -62,3 +62,20 @@ exports.getUserWishlists = async (userId) => {
         throw new Error(`Failed to get wishlists: ${error.message}`);
     }
 };
+
+exports.getWishlistById = async (id) => {
+    try {
+        const wishlistInstance = new Wishlist();
+
+        const wishlist = await wishlistInstance.findById(id);
+
+        if (!wishlist) {
+            throw new Error("Wishlist not found");
+        }
+
+        return wishlist;
+
+    } catch (error) {
+        throw new Error(`Get wishlist failed: ${error.message}`);
+    }
+};
