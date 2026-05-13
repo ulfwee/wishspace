@@ -6,7 +6,8 @@ import HomePage from '../features/HomePage/HomePage';
 import WishlistPage from '../features/WishlistPage/WishlistPage';
 import FriendsPage from '../features/FriendsPage/FriendsPage';
 import NotifPage from '../features/NotifPage/NotifPage';
-import ProfilePage from '../features/ProfilePage/ProfilePage'
+import ProfilePage from '../features/ProfilePage/ProfilePage';
+import SingleWishlistPage from '../features/SingleWishlistPage/SingleWishlistPage';
 
 const AppRoutes = () => {
   return (
@@ -15,10 +16,14 @@ const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/home" element={<HomePage />} />
+      
       <Route path="/wishlists" element={<WishlistPage />} />
+      <Route path="/wishlists/:id" element={<SingleWishlistPage />} />
+      
       <Route path="/friends" element={<FriendsPage />} />
-      <Route path="/notifications" element={<NotifPage />}/>
-      <Route path="/me" element={<ProfilePage />}/>
+      <Route path="/notifications" element={<NotifPage />} />
+      <Route path="/me" element={<ProfilePage />} />
+      
     </Routes>
   );
 };

@@ -23,4 +23,3 @@ async function checkConnection() {
     process.exit(1); 
   }
 }
-

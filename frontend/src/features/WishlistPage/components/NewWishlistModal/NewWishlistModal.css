@@ -1,0 +1,156 @@
+/* NewWishlistModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(56, 81, 68, 0.4); /* Primary з прозорістю */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: #F8F5F2; /* Background */
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 15px 35px rgba(56, 81, 68, 0.2);
+  animation: modalPop 0.3s ease;
+  border: 1px solid #C2D8C4; /* Accent */
+}
+
+.modal-content h2 {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  font-size: 1.8rem;
+  color: #385144; /* Primary */
+  font-family: inherit;
+}
+
+.input-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #385144;
+  margin-bottom: -0.8rem;
+  margin-left: 4px;
+}
+
+.error-message {
+  color: #8b2e2e;
+  background-color: #fcecec;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  border: 1px solid #f5c6cb;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+input,
+textarea,
+select {
+  padding: 12px 14px;
+  border: 2px solid #C2D8C4; /* Accent */
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: white;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #385144; /* Primary */
+  box-shadow: 0 0 0 3px rgba(56, 81, 68, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+/* Кнопка "Скасувати" */
+.modal-buttons button:first-child {
+  background-color: #e2e2e2;
+  color: #555;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #d4d4d4;
+}
+
+/* Кнопка "Створити" */
+.modal-buttons button:last-child {
+  background-color: #385144; /* Primary */
+  color: #F8F5F2; /* Background колір тексту */
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #2d4136;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(56, 81, 68, 0.2);
+}
+
+.modal-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Анімації */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Адаптивність */
+@media (max-width: 500px) {
+  .modal-content {
+    margin: 15px;
+    padding: 1.8rem 1.5rem;
+    border-radius: 12px;
+  }
+}

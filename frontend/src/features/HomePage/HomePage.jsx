@@ -15,7 +15,7 @@ const HomePage = () => {
             <h1>My Dashboard</h1>
             <p>Track your wishlists and upcoming events</p>
           </div>
-          <button className="btn-create">+ Create Wishlist</button>
+          <a href="/wishlists"><button className="btn-create">+ Create Wishlist</button></a>
         </header>
 
         <div className="stats-grid">

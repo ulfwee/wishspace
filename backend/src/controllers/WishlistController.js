@@ -1,22 +1,46 @@
 const WishlistService = require('../services/WishlistService');
 
 exports.getWishlists = async (req, res) => {
-    try{
-        const wishlists = await WishlistService.getWishlistInstance();
-        res.status(200).json({ wishlistsInfo: wishlists});
-    }catch(error){
+    try {
+        const wishlists = await WishlistService.getUserWishlists(req.user.userId); 
+        res.status(200).json({ wishlistsInfo: wishlists });
+    } catch (error) {
         res.status(404).json({ error: error.message });
     }
-}
+};
 
 exports.createWishlist = async (req, res) => {
-    try{
-        const newWishlist = await WishlistService.createWishlistInstance(req.body);
-        res.status(201).json({ wishlistinfo: newWishlist });
-    }catch(error){
-        res.status(400).json({ error: error.message});
+    try {
+
+        console.log("REQ.USER:");
+        console.log(req.user);
+
+        const wishlistData = {
+            ...req.body,
+            userId: req.user.userId
+        };
+
+        console.log("WISHLIST DATA:");
+        console.log(wishlistData);
+
+        const newWishlist =
+            await WishlistService.createWishlistInstance(
+                wishlistData
+            );
+
+        res.status(201).json({
+            wishlistinfo: newWishlist
+        });
+
+    } catch(error) {
+
+        console.error(error);
+
+        res.status(400).json({
+            error: error.message
+        });
     }
-}
+};
 
 exports.updateWishlist = async (req, res) => {
     try{

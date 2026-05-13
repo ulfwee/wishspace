@@ -3,25 +3,30 @@ const Wishlist = require('../models/Wishlist');
 exports.getWishlistInstance = async () => {
     try{
         const wishlistInstance = new Wishlist();
-        return await wishlistInstance.getDataAll();
+return await wishlistInstance.findByField("userId", userId);
     }catch(error){
         throw new Error(`Couldnt get data: ${error.message}`);
     }
 }
 
 exports.createWishlistInstance = async (wishlistData) => {
-    try{
-        const newWishlistInstance = new Wishlist({
-            ...wishlistData
-        })
+    try {
+    console.log("DEBUG: Data received in Service:", wishlistData);
 
-        const result = await newWishlistInstance.create(newWishlistInstance.toData())
-        console.log(`Wishlist ${result.title} was successfully created`)
+    const newWishlistInstance = new Wishlist({ ...wishlistData });
 
-        return result;
-    }catch(error){
-        throw new Error(`Couldnt create new wishlist: ${error.message}`);
-    }
+    
+    const dataToSave = newWishlistInstance.toData(); 
+
+        const result = await newWishlistInstance.create(dataToSave);
+    
+    console.log(`Wishlist ${result.title} was successfully created`);
+    return result;
+
+} catch (error) {
+    console.error("ERROR IN SERVICE:", error.message);
+    throw new Error(`Couldnt create new wishlist: ${error.message}`);
+}
 }
 
 exports.updateWishlistInstance = async (wishlistId, wishlistData) => {
@@ -51,7 +56,8 @@ exports.deleteWishlistInstance = async (wishlistId) => {
 exports.getUserWishlists = async (userId) => {
     try {
         const wishlistInstance = new Wishlist();
-        return await wishlistInstance.findByField("userId", userId);
+        // Викликаємо наш новий метод замість findByField
+        return await wishlistInstance.findAllByUserId(userId);
     } catch (error) {
         throw new Error(`Failed to get wishlists: ${error.message}`);
     }

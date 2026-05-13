@@ -1,11 +1,15 @@
 import React from 'react';
 import './CollectionCard.css';
 
-const CollectionCard = ({ title, type, date, current, total, privacy, icon = "🎁" }) => {
-  const percentage = (current / total) * 100;
+const CollectionCard = ({ 
+  _id, id, title, type, eventCategory, date, current = 0, 
+  total = 0, privacy, imgURL, icon = "🎁", 
+  onClick 
+}) => {
+  const percentage = total > 0 ? (current / total) * 100 : 0;
 
   return (
-    <div className="collection-card">
+    <div className="collection-card" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="card-top">
         <div className="privacy-badge">
           {privacy === 'public' && "🌐 public"}
@@ -14,16 +18,18 @@ const CollectionCard = ({ title, type, date, current, total, privacy, icon = "�
         </div>
       </div>
       
-      <div className="card-icon">{icon}</div>
+      {imgURL ? (
+        <img src={imgURL} alt={title} className="card-image" />
+      ) : (
+        <div className="card-icon">{icon}</div>
+      )}
 
       <div className="card-info">
         <h3>{title}</h3>
-        <p>{type}</p>
+        <p>{eventCategory || type}</p>
       </div>
 
-      <div className="card-date">
-        📅 {date}
-      </div>
+      {date && <div className="card-date">📅 {date}</div>}
 
       <div className="progress-section">
         <div className="progress-labels">
@@ -36,9 +42,7 @@ const CollectionCard = ({ title, type, date, current, total, privacy, icon = "�
       </div>
 
       <div className="card-footer">
-        <a href="#" className="view-link">
-          View Collection <span>→</span>
-        </a>
+        <span className="view-link">View Collection →</span>
       </div>
     </div>
   );
