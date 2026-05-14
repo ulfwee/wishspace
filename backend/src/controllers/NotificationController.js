@@ -1,14 +1,39 @@
 const NotificationService = require('../services/NotificationService');
 
 exports.getNotifications = async (req, res) => {
-    const userId = req.user?.userId || req.user?.id;
 
-    if (!userId) {
-        return res.status(401).json({ message: "Authentication failed - userId not found" });
+    try {
+
+        const userId =
+            req.user?.userId || req.user?.id;
+
+        if (!userId) {
+
+            return res.status(401).json({
+                message:
+                    "Authentication failed"
+            });
+        }
+
+        await NotificationService
+            .generateUpcomingEventNotifications(
+                userId
+            );
+
+        const data =
+            await NotificationService
+                .getUserNotifications(userId);
+
+        res.json(data);
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            message: error.message
+        });
     }
-
-    const data = await NotificationService.getUserNotifications(req.user.userId);
-    res.json(data);
 };
 
 exports.read = async (req, res) => {
