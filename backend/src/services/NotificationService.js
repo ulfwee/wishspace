@@ -22,82 +22,49 @@ exports.deleteNotification = async (id) => {
     return await instance.delete(id);
 };
 
-exports.generateUpcomingEventNotifications =
-async (userId) => {
-
+exports.generateUpcomingEventNotifications = async (userId) => {
     const userModel = new User();
     const wishlistModel = new Wishlist();
     const notificationModel = new Notification();
 
     const user = await userModel.findById(userId);
-
-    if (!user) {
-        throw new Error("User not found");
-    }
+    if (!user) throw new Error("User not found");
 
     const friends = user.friends || [];
-
-    if (!friends.length) {
-        return [];
-    }
+    if (!friends.length) return [];
 
     const today = new Date();
 
     for (const friendId of friends) {
-
-        const wishlists =
-            await wishlistModel.findAllByUserId(friendId);
-
-        const friend =
-            await userModel.findById(friendId);
+        const wishlists = await wishlistModel.findAllByUserId(friendId);
+        const friend = await userModel.findById(friendId);
 
         for (const wishlist of wishlists) {
-
             if (!wishlist.eventDate) continue;
 
-            const eventDate =
-                new Date(wishlist.eventDate);
-
-            const diffTime =
-                eventDate.getTime() - today.getTime();
-
-            const diffDays = Math.ceil(
-                diffTime / (1000 * 60 * 60 * 24)
-            );
+            const eventDate = new Date(wishlist.eventDate);
+            const diffTime = eventDate.getTime() - today.getTime();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (diffDays >= 0 && diffDays <= 14) {
-
-                const existing =
-                    await notificationModel
-                        .findByField(
-                            "relatedId",
-                            wishlist.id
-                        );
-
-                const alreadyExists =
-                    existing.find(
-                        n =>
-                            n.recipientId === userId
-                    );
+                // Check if notification already exists
+                const existing = await notificationModel.findByField("relatedId", wishlist.id);
+                const alreadyExists = existing.some(n => n.recipientId === userId);
 
                 if (!alreadyExists) {
-
                     await notificationModel.create({
-
                         recipientId: userId,
-
                         senderId: friendId,
-
                         type: "event_reminder",
-
-                        message:
-                            `${friend.username}'s ` +
-                            `${wishlist.eventCategory} ` +
-                            `is in ${diffDays} days`,
-
+                        message: `${friend.username}'s ${wishlist.eventCategory} is in ${diffDays} days`,
                         isRead: false,
-
-                        relatedId: wishlist.id
+                        relatedId: wishlist.id,
+                        
+                        // === NEW DATA ===
+                        eventDate: wishlist.eventDate,
+                        daysLeft: diffDays,
+                        eventCategory: wishlist.eventCategory,
+                        friendName: friend.username
                     });
                 }
             }
