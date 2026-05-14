@@ -1,7 +1,13 @@
 import React from 'react';
 import './WishlistHero.css';
 
-const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, onBack, isOwner }) => {
+const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, onBack, isOwner, privacy }) => {
+  const privacySettings = {
+    public: { label: "Public", icon: "🌐" },
+    friends: { label: "Friends Only", icon: "👥" },
+    private: { label: "Private", icon: "🔒" }
+  };
+  const currentPrivacy = privacySettings[privacy] || privacySettings.public;
   return (
     <div className="heroSection">
       <div className="heroTop">
@@ -17,7 +23,9 @@ const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, o
       </div>
 
       <div className="metaRow">
-        <span className="privacyBadge">👥 Friends Only</span>
+        <span className="privacyBadge">
+          {currentPrivacy.icon} {currentPrivacy.label}
+        </span>
         <span>{itemCount} items • {reservedCount} reserved</span>
       </div>
       <div className="progressSection">
