@@ -1,4 +1,5 @@
 const FriendRequest = require('../models/FriendRequest');
+const Notification = require('../models/Notification');
 const User = require('../models/User');
 
 exports.sendRequest = async (senderId, receiverId) => {
@@ -11,8 +12,8 @@ exports.sendRequest = async (senderId, receiverId) => {
 
     const requestModel = new FriendRequest();
     const userModel = new User();
+    const notificationModel = new Notification();
 
-    // Перевірка, чи вже друзі
     const sender = await userModel.findById(senderId);
     const receiver = await userModel.findById(receiverId);
 
@@ -24,7 +25,6 @@ exports.sendRequest = async (senderId, receiverId) => {
         throw new Error("You are already friends");
     }
 
-    // Перевірка на існуючий запит
     const existing = await requestModel.collection
         .where('senderId', '==', senderId)
         .where('receiverId', '==', receiverId)
@@ -40,7 +40,18 @@ exports.sendRequest = async (senderId, receiverId) => {
         status: "pending"
     });
 
-    return await requestModel.create(newRequest.toData());
+    const createdRequest = await requestModel.create(newRequest.toData());
+
+    await notificationModel.create({
+        recipientId: receiverId,
+        senderId: senderId,
+        type: "friend_request",
+        message: `${sender?.username || 'Someone'} надіслав(-ла) вам запит у друзі`,
+        isRead: false,
+        relatedId: createdRequest.id
+    });
+
+    return createdRequest;
 };
 
 exports.getIncomingRequests = async (userId) => {

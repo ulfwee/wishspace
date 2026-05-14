@@ -30,7 +30,7 @@ app.use('/', wishItemRoutes);
 
 app.use('/friends', FRequestRoutes);
 
-app.use('/', NotificationRoutes);
+app.use('/notifications', NotificationRoutes);
 
 app.use('/', BookingRoutes);
 

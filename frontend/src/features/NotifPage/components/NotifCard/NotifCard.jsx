@@ -1,7 +1,7 @@
 import React from 'react';
 import './NotifCard.css';
 
-const NotificationCard = ({ notification }) => {
+const NotificationCard = ({ notification, onMarkRead, onDelete }) => {
   const { title, message, time, icon, unread } = notification;
 
   return (
@@ -16,11 +16,17 @@ const NotificationCard = ({ notification }) => {
         <div className="notification-time">{time}</div>
       </div>
 
-      <button className="notification-delete">
-        🗑️
-      </button>
-    </div>
-  );
-};
+      <div className="notification-actions">
+        {unread && (
+          <button className="mark-read-btn" onClick={onMarkRead}>
+            ✓
+          </button>
+        )}
+        <button className="notification-delete" onClick={onDelete}>
+          🗑️
+        </button>
+      </div>
+  </div>
+);};
 
 export default NotificationCard;
