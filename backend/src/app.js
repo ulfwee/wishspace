@@ -6,6 +6,7 @@ const wishItemRoutes = require('./routes/WishItemRoutes');
 const FRequestRoutes = require('./routes/FRequestRoutes');
 const NotificationRoutes = require('./routes/NotificationRoutes');
 const BookingRoutes = require('./routes/BookingRoutes');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -33,5 +34,6 @@ app.use('/', NotificationRoutes);
 
 app.use('/', BookingRoutes);
 
+app.use('/admin', adminRoutes);
 
 module.exports = app;

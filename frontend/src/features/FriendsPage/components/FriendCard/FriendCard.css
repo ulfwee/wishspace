@@ -5,43 +5,46 @@
   border: 1px solid rgba(0, 0, 0, 0.05);
   text-align: center;
   transition: box-shadow 0.3s;
+  height: 100%;
 }
 
 .friend-card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .friend-card-header {
-  height: 80px;
-  background-color: #C2D8C4; /* Світло-зелений акцент */
+  height: 90px;
+  background: linear-gradient(135deg, #8ea390, #6b8a75); /* твій зелений відтінок */
   position: relative;
 }
 
 .friend-avatar-large {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   background: white;
   border: 4px solid white;
   border-radius: 50%;
   position: absolute;
-  bottom: -32px;
+  bottom: -36px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 28px;
   font-weight: 800;
   color: #385144;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .friend-card-body {
-  padding: 45px 20px 24px;
+  padding: 48px 20px 24px;
 }
 
 .friend-card-body h3 {
-  margin: 0;
-  color: #385144;
+  margin: 0 0 4px 0;
+  color: #1f2a24;
+  font-size: 1.35rem;
 }
 
 .friend-stats {
@@ -82,4 +85,30 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+.friends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.friend-username {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.friend-bio {
+  margin: 12px 0 16px;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  min-height: 44px;
+}
+
+.friend-mutual {
+  color: #64748b;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 16px;
 }

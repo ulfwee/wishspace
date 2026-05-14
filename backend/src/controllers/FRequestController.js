@@ -57,3 +57,20 @@ exports.reject = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+exports.getMyFriends = async (req, res) => {
+    try {
+        const userId = req.user?.userId;
+
+        if (!userId) {
+            return res.status(401).json({ message: "Authentication failed - userId not found" });
+        }
+
+        const result = await FriendService.getMyFriends(userId);
+        res.json(result);
+
+    } catch (error) {
+        console.error("Get my friends error:", error);
+        res.status(500).json({ message: error.message });
+    }
+};

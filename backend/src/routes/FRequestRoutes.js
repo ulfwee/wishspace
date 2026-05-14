@@ -11,4 +11,7 @@ router.put('/:id/reject', auth, FRequestController.reject);
 
 router.get('/requests', auth, FRequestController.getRequests);
 
+router.get('/my-friends', auth, FRequestController.getMyFriends);
+
+
 module.exports = router;

@@ -8,6 +8,7 @@ import FriendsPage from '../features/FriendsPage/FriendsPage';
 import NotifPage from '../features/NotifPage/NotifPage';
 import ProfilePage from '../features/ProfilePage/ProfilePage';
 import SingleWishlistPage from '../features/SingleWishlistPage/SingleWishlistPage';
+import AdminPage from '../features/AdminPage/AdminPage';
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/home" element={<HomePage />} />
+      <Route path="/admin" element={<AdminPage />} />
       
       <Route path="/wishlists" element={<WishlistPage />} />
       <Route path="/wishlists/:id" element={<SingleWishlistPage />} />

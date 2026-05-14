@@ -99,3 +99,31 @@ exports.rejectRequest = async (requestId) => {
     const requestModel = new FriendRequest();
     return await requestModel.delete(requestId);
 };
+
+
+exports.getMyFriends = async (userId) => {
+    if (!userId) {
+        throw new Error("User ID is required");
+    }
+
+    const userModel = new User();
+    const user = await userModel.findById(userId);
+
+    if (!user?.friends?.length) {
+        return [];
+    }
+
+    const friendsData = await Promise.all(
+        user.friends.map(async (friendId) => {
+            const friend = await userModel.findById(friendId);
+            return friend ? {
+                id: friend.id || friend.uid,
+                uid: friend.id || friend.uid,
+                username: friend.username,
+                biography: friend.biography,
+            } : null;
+        })
+    );
+
+    return friendsData.filter(Boolean);
+};

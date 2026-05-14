@@ -46,7 +46,7 @@ export default function StepsBlock(){
       </div>
 
       <div className="steps-footer">
-        <button className="btn-primary">Create wishlist</button>
+        <a href="/login"><button className="btn-primary">Create wishlist</button></a>
       </div>
     </section>
   );
