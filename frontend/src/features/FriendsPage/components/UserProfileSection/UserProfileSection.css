@@ -63,6 +63,14 @@
     transition: 0.3s;
 }
 
+.mini-wishlist-card h3{
+    white-space: nowrap;     
+    overflow: hidden;         
+    text-overflow: ellipsis;
+}
+    
+
+
 .mini-wishlist-card:hover {
     border-color: #385144;
     transform: translateY(-5px);
@@ -72,4 +80,14 @@
     color: #385144;
     font-weight: 700;
     font-size: 0.9rem;
+}
+
+.btn-friends {
+  background-color: #709f72;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: default;
 }

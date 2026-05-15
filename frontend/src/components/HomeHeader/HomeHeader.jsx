@@ -6,10 +6,8 @@ const HomeHeader = ({ activePage = 'home' }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-      if (window.confirm("Ви дійсно хочете вийти з акаунту?")) {
-          localStorage.removeItem('token');     
-          navigate('/');                   
-      }
+    localStorage.removeItem('token');     
+    navigate('/');                   
   };
   return (
     <header className="home-header">

@@ -8,6 +8,7 @@
   gap: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
   transition: transform 0.2s, box-shadow 0.2s;
+  max-width: 100%;
 }
 
 .collection-card:hover {
@@ -44,6 +45,9 @@
   font-size: 1.25rem;
   margin: 0 0 4px 0;
   font-weight: 700;
+  white-space: nowrap;     
+  overflow: hidden;         
+  text-overflow: ellipsis;
 }
 
 .card-info p {

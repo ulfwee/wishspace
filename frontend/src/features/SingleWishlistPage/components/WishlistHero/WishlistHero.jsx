@@ -1,7 +1,7 @@
 import React from 'react';
 import './WishlistHero.css';
 
-const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, onBack, isOwner, privacy }) => {
+const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, onBack, isOwner, privacy, onEditClick, onDeleteClick }) => {
   const privacySettings = {
     public: { label: "Public", icon: "🌐" },
     friends: { label: "Friends Only", icon: "👥" },
@@ -15,7 +15,12 @@ const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, o
           <button className="backArrowBtn" onClick={onBack}>←</button>
           <h1 className="title">{title}</h1>
           <span className="birthdayEmoji">🎂</span>
-          {isOwner && <button className="editBtn">✎</button>}
+          {isOwner && (
+              <div className="owner-actions">
+                  <button className="editBtn" onClick={onEditClick}>✎ </button>
+                  <button className="deleteBtn" onClick={onDeleteClick}>🗑 </button>
+              </div>
+          )}
         </div>
         {isOwner && <button className="addButton" onClick={onAddClick}>+ Add Item</button>}
       </div>

@@ -7,7 +7,8 @@ import WishlistHero from './components/WishlistHero/WishlistHero';
 import FilterBar from './components/FilterBar/FilterBar';
 import GiftCard from './components/GiftCard/GiftCard';
 import AddItemModal from './components/AddItemModal/AddItemModal';
-
+import EditWishlistModal from './components/EditWishlistModal/EditWishlistModal'; 
+import ConfirmDeleteModal from './components/ConfirmDeleteModal/ConfirmDeleteModal';
 import './SingleWishlistPage.css';
 
 const SingleWishlistPage = () => {
@@ -15,60 +16,63 @@ const SingleWishlistPage = () => {
     const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
     const [wishlist, setWishlist] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [accessDenied, setAccessDenied] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
     const [searchTerm, setSearchTerm] = useState('');
     const [priorityFilter, setPriorityFilter] = useState('all');
     const [statusFilter, setStatusFilter] = useState('all');
 
     const token = localStorage.getItem('token');
 
+    const fetchWishlistData = async () => {
+        if (!token) {
+            setError("Please login to view this content");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const headers = { Authorization: `Bearer ${token}` };
+
+            const [wishlistRes, itemsRes] = await Promise.all([
+                axios.get(`http://localhost:5000/wishlist/${id}`, { headers }),
+                axios.get(`http://localhost:5000/wishlists/${id}/items`, { headers })
+            ]);
+
+            const wishlistData = wishlistRes.data.wishlist || wishlistRes.data;
+            const userData = JSON.parse(localStorage.getItem('user'));
+            
+            const currentUserId = userData?.id || userData?.uid;
+            const ownerId = wishlistData.userId || wishlistData.uid;
+
+            const isOwner = String(currentUserId) === String(ownerId);
+            const isFriend = userData?.friends?.includes(ownerId);
+
+            if (wishlistData.privacy === 'private' && !isOwner) {
+                setAccessDenied(true);
+            } else if (wishlistData.privacy === 'friends' && !isOwner && !isFriend) {
+                setAccessDenied(true);
+            } else {
+                setWishlist({
+                    wishlistInfo: wishlistData,
+                    items: Array.isArray(itemsRes.data) ? itemsRes.data : []
+                });
+            }
+        } catch (err) {
+            console.error("Fetch error:", err);
+            setError('Failed to load wishlist data');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchWishlistData = async () => {
-            if (!token) {
-                setError("Please login to view this content");
-                setLoading(false);
-                return;
-            }
-
-            try {
-                setLoading(true);
-                const headers = { Authorization: `Bearer ${token}` };
-
-                const [wishlistRes, itemsRes] = await Promise.all([
-                    axios.get(`http://localhost:5000/wishlist/${id}`, { headers }),
-                    axios.get(`http://localhost:5000/wishlists/${id}/items`, { headers })
-                ]);
-
-                const wishlistData = wishlistRes.data.wishlist;
-                const userData = JSON.parse(localStorage.getItem('user'));
-                
-                const currentUserId = userData?.id || userData?.uid;
-                const ownerId = wishlistData.userId || wishlistData.uid;
-
-                const isOwner = String(currentUserId) === String(ownerId);
-                const isFriend = userData?.friends?.includes(ownerId);
-
-                if (wishlistData.privacy === 'private' && !isOwner) {
-                    setAccessDenied(true);
-                } else if (wishlistData.privacy === 'friends' && !isOwner && !isFriend) {
-                    setAccessDenied(true);
-                } else {
-                    setWishlist({
-                        wishlistInfo: wishlistData,
-                        items: Array.isArray(itemsRes.data) ? itemsRes.data : []
-                    });
-                }
-            } catch (err) {
-                console.error("Fetch error:", err);
-                setError('Failed to load wishlist data');
-            } finally {
-                setLoading(false);
-            }
-        };
-
         if (id) fetchWishlistData();
     }, [id, token]);
 
@@ -77,9 +81,35 @@ const SingleWishlistPage = () => {
         const userData = JSON.parse(localStorage.getItem('user'));
         const currentUserId = userData?.id || userData?.uid;
         const ownerId = wishlist.wishlistInfo.userId || wishlist.wishlistInfo.uid;
-        
         return String(currentUserId) === String(ownerId);
     }, [wishlist]);
+
+
+    const handleEditWishlist = async (updatedData) => {
+        try {
+            await axios.put(`http://localhost:5000/wishlist/${id}`, updatedData, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            fetchWishlistData(); 
+            setIsEditModalOpen(false);
+        } catch (err) {
+            console.error(err);
+            alert("Помилка при редагуванні");
+        }
+    };
+
+    const handleDeleteWishlist = async () => {
+        try {
+            await axios.delete(`http://localhost:5000/wishlist/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setIsDeleteModalOpen(false);
+            navigate('/wishlists');
+        } catch (err) {
+            console.error(err);
+            alert("Помилка при видаленні");
+        }
+    };
 
     const filteredItems = useMemo(() => {
         const items = wishlist?.items || [];
@@ -104,7 +134,7 @@ const SingleWishlistPage = () => {
     const handleItemAdded = (newItem) => {
         setWishlist(prev => ({ 
             ...prev, 
-            items: [...prev.items, newItem] 
+            items: [...(prev.items || []), newItem] 
         }));
     };
 
@@ -122,7 +152,6 @@ const SingleWishlistPage = () => {
     };
 
     if (loading) return <div className="loader">Завантаження...</div>;
-    
     if (accessDenied) {
     return (
         <div className="pageWrapper">
@@ -146,13 +175,13 @@ const SingleWishlistPage = () => {
         </div>
     );
 }
-
     if (error) return <div className="error">{error}</div>;
 
     const itemsCount = wishlist?.items?.length || 0;
     const reservedCount = wishlist?.items?.filter(i => i.isBooked).length || 0;
     const progressPercent = itemsCount > 0 ? Math.round((reservedCount / itemsCount) * 100) : 0;
 
+    console.log("Модалка відкрита?", isDeleteModalOpen);
     return (
         <div className="pageWrapper">
             <HomeHeader />
@@ -166,16 +195,34 @@ const SingleWishlistPage = () => {
                     onBack={() => navigate('/wishlists')}
                     isOwner={isOwner}
                     privacy={wishlist?.wishlistInfo?.privacy}
+                    onEditClick={() => setIsEditModalOpen(true)}     
+                    onDeleteClick={() => setIsDeleteModalOpen(true)}            
+                />
+
+                <ConfirmDeleteModal 
+                    isOpen={isDeleteModalOpen}
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    onConfirm={handleDeleteWishlist}
+                    title={wishlist?.wishlistInfo?.title}
                 />
 
                 {isOwner && (
-                    <AddItemModal 
-                        isOpen={isModalOpen} 
-                        onClose={() => setIsModalOpen(false)}
-                        onItemAdded={handleItemAdded}
-                        wishlistId={id}
-                        token={token}
-                    />
+                    <>
+                        <AddItemModal 
+                            isOpen={isModalOpen} 
+                            onClose={() => setIsModalOpen(false)}
+                            onItemAdded={handleItemAdded}
+                            wishlistId={id}
+                            token={token}
+                        />
+
+                        <EditWishlistModal 
+                            isOpen={isEditModalOpen}
+                            onClose={() => setIsEditModalOpen(false)}
+                            wishlist={wishlist?.wishlistInfo}
+                            onSave={handleEditWishlist}
+                        />
+                    </>
                 )}
 
                 <FilterBar

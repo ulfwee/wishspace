@@ -10,10 +10,7 @@ class Wishlist extends BaseModel {
         this.description = wishlistData.description || "";
         this.imgURL = wishlistData.imgURL || "";
         this.userId = wishlistData.userId || null;
-        
-        // ВИПРАВЛЕНО: додано this.
         this.eventCategory = wishlistData.eventCategory || "Other";
-        // Якщо у тебе є дата події в логах, додай і її сюди:
         this.eventDate = wishlistData.eventDate || null;
     }
 
@@ -76,7 +73,7 @@ class Wishlist extends BaseModel {
             privacy: this.privacy,
             description: this.description,
             imgURL: this.imgURL,
-            userId: this.userId, // Ось тут він іде в базу
+            userId: this.userId, 
             eventCategory: this.eventCategory,
             eventDate: this.eventDate
         };

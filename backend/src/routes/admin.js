@@ -12,7 +12,7 @@ const isAdmin = (req, res, next) => {
 
 router.get('/users', auth, async (req, res) => {
     try {
-        console.log("Admin request - user:", req.user); // для дебагу
+        console.log("Admin request - user:", req.user);
 
         if (req.user?.role !== 'admin') {
             return res.status(403).json({ message: "Access denied. Admin only." });

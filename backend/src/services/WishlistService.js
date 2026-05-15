@@ -40,23 +40,32 @@ exports.updateWishlistInstance = async (wishlistId, wishlistData) => {
 }
 
 exports.deleteWishlistInstance = async (wishlistId) => {
-    try{
+    try {
         const wishlistInstance = new Wishlist();
+        const itemInstance = new WishItem();   
+
         const existingWishlist = await wishlistInstance.findById(wishlistId);
-        if(!existingWishlist){
-            throw new Error(`This wishlist does not exist`)
+        if (!existingWishlist) {
+            throw new Error("Wishlist not found");
         }
+
+        const items = await itemInstance.findByField("wishlistId", wishlistId);
+        
+        for (const item of items) {
+            await itemInstance.delete(item.uid || item.id);
+        }
+
         await wishlistInstance.delete(wishlistId);
-        return {message: 'Deleted wishlist successfully'};
-    }catch(error){
+
+        return { message: "Wishlist and all its items deleted successfully" };
+    } catch (error) {
         throw new Error(`Couldnt delete wishlist: ${error.message}`);
     }
-}
+};
 
 exports.getUserWishlists = async (userId) => {
     try {
         const wishlistInstance = new Wishlist();
-        // Викликаємо наш новий метод замість findByField
         return await wishlistInstance.findAllByUserId(userId);
     } catch (error) {
         throw new Error(`Failed to get wishlists: ${error.message}`);

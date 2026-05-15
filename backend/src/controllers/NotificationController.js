@@ -1,59 +1,81 @@
-const NotificationService = require('../services/NotificationService');
+class NotificationController {
 
-exports.getNotifications = async (req, res) => {
+    constructor(notificationService) {
+        this.notificationService =
+            notificationService;
+    }
 
-    try {
+    getNotifications = async (req, res) => {
 
-        const userId =
-            req.user?.userId || req.user?.id;
+        try {
 
-        if (!userId) {
+            const userId =
+                req.user?.userId;
 
-            return res.status(401).json({
-                message:
-                    "Authentication failed"
+            await this.notificationService
+                .generateUpcomingEventNotifications(
+                    userId
+                );
+
+            const data =
+                await this.notificationService
+                    .getUserNotifications(
+                        userId
+                    );
+
+            res.json(data);
+
+        } catch (error) {
+
+            res.status(500).json({
+                message: error.message
             });
+
         }
+    };
 
-        await NotificationService
-            .generateUpcomingEventNotifications(
-                userId
-            );
+    read = async (req, res) => {
 
-        const data =
-            await NotificationService
-                .getUserNotifications(userId);
+        try {
 
-        res.json(data);
+            const data =
+                await this.notificationService
+                    .markAsRead(
+                        req.params.id
+                    );
 
-    } catch (error) {
+            res.json(data);
 
-        console.error(error);
+        } catch (error) {
 
-        res.status(500).json({
-            message: error.message
-        });
-    }
-};
+            res.status(400).json({
+                message: error.message
+            });
 
-exports.read = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const data = await NotificationService.markAsRead(id);
-        res.json(data);
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ message: error.message });
-    }
-};
+        }
+    };
 
-exports.delete = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const data = await NotificationService.deleteNotification(id);
-        res.json(data);
-    } catch (error) {
-        console.error(error);
-        res.status(400).json({ message: error.message });
-    }
-};
+    delete = async (req, res) => {
+
+        try {
+
+            const data =
+                await this.notificationService
+                    .deleteNotification(
+                        req.params.id
+                    );
+
+            res.json(data);
+
+        } catch (error) {
+
+            res.status(400).json({
+                message: error.message
+            });
+
+        }
+    };
+}
+
+module.exports =
+    NotificationController;

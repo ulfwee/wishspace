@@ -37,7 +37,6 @@ const RegisterForm = () => {
         );
       
       localStorage.setItem('token', response.data.token);
-      alert('Реєстрація пройшла успішно! 🎉');
       navigate('/home');
 
     } catch (err) {

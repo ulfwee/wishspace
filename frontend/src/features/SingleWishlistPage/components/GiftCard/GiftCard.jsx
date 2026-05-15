@@ -23,7 +23,6 @@ const GiftCard = ({ gift, isOwner, onUpdate }) => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             
-            alert('Заброньовано!');
             if (onUpdate) {
                 onUpdate(itemId);
             }
@@ -32,13 +31,22 @@ const GiftCard = ({ gift, isOwner, onUpdate }) => {
             alert(error.response?.data?.error || 'Помилка бронювання');
         }
     };
-
+    const imageSource = gift.imgURL;
     return (
         <div className="card">
             <div className="imageContainer">
                 <span className={`priorityBadge priority-${gift.priority}`}>{gift.priority}</span>
-                <div className="itemEmoji">{gift.image || '🎁'}</div>
-                {isOwner && <button className="optionsButton">⋮</button>}
+                {imageSource && imageSource.startsWith('http') ? (
+                    <img 
+                        src={imageSource} 
+                        alt={gift.title} 
+                        className="itemImage" 
+                        onError={(e) => { e.target.onerror = null; e.target.src = 'https://via.placeholder.com/150?text=🎁'; }}
+                    />
+                ) : (
+                    <div className="itemEmoji">{imageSource || '🎁'}</div>
+                )}
+                
             </div>
             <div className="details">
                 <h3 className="itemTitle">{gift.title}</h3>

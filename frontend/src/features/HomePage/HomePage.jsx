@@ -43,8 +43,6 @@ const HomePage = () => {
 
       if (!token) return;
 
-      // 1. GET USER WISHLISTS
-
       const wishlistRes =
         await axios.get(
           'http://localhost:5000/wishlist',
@@ -58,8 +56,6 @@ const HomePage = () => {
 
       const wishlists =
         wishlistRes.data.wishlistsInfo || [];
-
-      // 2. COUNT ITEMS
 
       let totalItems = 0;
 
@@ -91,8 +87,6 @@ const HomePage = () => {
         }
       }
 
-      // 3. GET NOTIFICATIONS
-
       const notifRes =
         await axios.get(
           'http://localhost:5000/notifications',
@@ -115,8 +109,6 @@ const HomePage = () => {
         );
 
       setEvents(eventNotifications);
-
-      // 4. SET STATS
 
       setStats({
 

@@ -1,90 +1,158 @@
-const WishlistService = require('../services/WishlistService');
+class WishlistController {
 
-exports.getWishlists = async (req, res) => {
-    try {
-        const wishlists = await WishlistService.getUserWishlists(req.user.userId); 
-        res.status(200).json({ wishlistsInfo: wishlists });
-    } catch (error) {
-        res.status(404).json({ error: error.message });
+    constructor(wishlistService) {
+        this.wishlistService = wishlistService;
     }
-};
 
-exports.createWishlist = async (req, res) => {
-    try {
+    getWishlists = async (req, res) => {
+        try {
 
-        console.log("REQ.USER:");
-        console.log(req.user);
+            const wishlists =
+                await this.wishlistService
+                    .getUserWishlists(req.user.userId);
 
-        const wishlistData = {
-            ...req.body,
-            userId: req.user.userId
-        };
+            res.status(200).json({
+                wishlistsInfo: wishlists
+            });
 
-        console.log("WISHLIST DATA:");
-        console.log(wishlistData);
+        } catch (error) {
 
-        const newWishlist =
-            await WishlistService.createWishlistInstance(
-                wishlistData
-            );
+            res.status(404).json({
+                error: error.message
+            });
 
-        res.status(201).json({
-            wishlistinfo: newWishlist
-        });
-
-    } catch(error) {
-
-        console.error(error);
-
-        res.status(400).json({
-            error: error.message
-        });
-    }
-};
-
-exports.updateWishlist = async (req, res) => {
-    try{
-        const {id} = req.params;
-        const updatedWishlist = await WishlistService.updateWishlistInstance(id, req.body);
-        res.status(200).json({ updatedWishlistInfo: updatedWishlist });
-    }catch(error){
-        res.status(400).json({ error: error.message });
-    }
-}
-
-exports.deleteWishlist = async (req, res) => {
-    try{
-        const {id} = req.params;
-        const result = await WishlistService.deleteWishlistInstance(id);
-        res.status(200).json({result});
-    }catch(error){
-        res.status(400).json({error:error.message});
-    }
-}
-
-exports.getUserWishlists = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const wishlists = await WishlistService.getUserWishlists(userId);
-
-        res.status(200).json(wishlists);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-
-exports.getWishlistById = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const wishlist = await WishlistService.getWishlistById(id);
-        
-        if (!wishlist) {
-            return res.status(404).json({ error: "Wishlist not found" });
         }
+    };
 
-        res.status(200).json({ wishlist });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
+    createWishlist = async (req, res) => {
+
+        try {
+
+            const wishlistData = {
+                ...req.body,
+                userId: req.user.userId
+            };
+
+            const newWishlist =
+                await this.wishlistService
+                    .createWishlistInstance(
+                        wishlistData
+                    );
+
+            res.status(201).json({
+                wishlistinfo: newWishlist
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    updateWishlist = async (req, res) => {
+
+        try {
+
+            const { id } = req.params;
+
+            const updatedWishlist =
+                await this.wishlistService
+                    .updateWishlistInstance(
+                        id,
+                        req.body
+                    );
+
+            res.status(200).json({
+                updatedWishlistInfo:
+                    updatedWishlist
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    deleteWishlist = async (req, res) => {
+
+        try {
+
+            const { id } = req.params;
+
+            const result =
+                await this.wishlistService
+                    .deleteWishlistInstance(id);
+
+            res.status(200).json({
+                result
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    getUserWishlists = async (req, res) => {
+
+        try {
+
+            const { userId } = req.params;
+
+            const wishlists =
+                await this.wishlistService
+                    .getUserWishlists(userId);
+
+            res.status(200).json(wishlists);
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    getWishlistById = async (req, res) => {
+
+        try {
+
+            const { id } = req.params;
+
+            const wishlist =
+                await this.wishlistService
+                    .getWishlistById(id);
+
+            if (!wishlist) {
+
+                return res.status(404).json({
+                    error: "Wishlist not found"
+                });
+
+            }
+
+            res.status(200).json({
+                wishlist
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+}
+
+module.exports = WishlistController;

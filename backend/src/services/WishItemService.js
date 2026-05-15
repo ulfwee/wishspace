@@ -16,7 +16,6 @@ exports.createItem = async (wishlistId, data) => {
 exports.getItemsByWishlist = async (wishlistId) => {
     try {
         const itemInstance = new WishItem();
-        // Тепер це викличе ваш новий метод з WishItem, а не з BaseModel
         return await itemInstance.findByField("wishlistId", wishlistId);
     } catch (error) {
         throw new Error(`Get items failed: ${error.message}`);
