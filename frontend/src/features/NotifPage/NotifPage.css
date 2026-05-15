@@ -52,7 +52,6 @@ body{
   color: #385144;
 }
 
-/* Stats Grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -60,7 +59,6 @@ body{
   margin-bottom: 48px;
 }
 
-/* Notifications Section */
 .notifications-section {
   margin-bottom: 50px;
 }

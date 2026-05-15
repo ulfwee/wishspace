@@ -36,13 +36,11 @@
   letter-spacing: 0.5px;
 }
 
-/* Індивідуальні акцентні кольори для кожної картки */
 .stats-card:nth-child(1) { --accent-color: #385144; }
 .stats-card:nth-child(2) { --accent-color: #C2D8C4; }
 .stats-card:nth-child(3) { --accent-color: #4ade80; }
 .stats-card:nth-child(4) { --accent-color: #fbbf24; }
 
-/* Адаптив */
 @media (max-width: 768px) {
   .stats-card {
     padding: 24px 16px;

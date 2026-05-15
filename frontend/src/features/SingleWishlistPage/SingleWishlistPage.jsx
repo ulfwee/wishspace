@@ -14,7 +14,6 @@ const SingleWishlistPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // --- State Hooks ---
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [wishlist, setWishlist] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -26,7 +25,6 @@ const SingleWishlistPage = () => {
 
     const token = localStorage.getItem('token');
 
-    // --- Effect Hook for Data Fetching ---
     useEffect(() => {
         const fetchWishlistData = async () => {
             if (!token) {
@@ -39,7 +37,6 @@ const SingleWishlistPage = () => {
                 setLoading(true);
                 const headers = { Authorization: `Bearer ${token}` };
 
-                // Fetching both Wishlist details and Items
                 const [wishlistRes, itemsRes] = await Promise.all([
                     axios.get(`http://localhost:5000/wishlist/${id}`, { headers }),
                     axios.get(`http://localhost:5000/wishlists/${id}/items`, { headers })
@@ -51,7 +48,6 @@ const SingleWishlistPage = () => {
                 const currentUserId = userData?.id || userData?.uid;
                 const ownerId = wishlistData.userId || wishlistData.uid;
 
-                // --- PRIVACY LOGIC ---
                 const isOwner = String(currentUserId) === String(ownerId);
                 const isFriend = userData?.friends?.includes(ownerId);
 
@@ -76,7 +72,6 @@ const SingleWishlistPage = () => {
         if (id) fetchWishlistData();
     }, [id, token]);
 
-    // --- Memoized Ownership Check ---
     const isOwner = useMemo(() => {
         if (!wishlist?.wishlistInfo) return false;
         const userData = JSON.parse(localStorage.getItem('user'));
@@ -86,7 +81,6 @@ const SingleWishlistPage = () => {
         return String(currentUserId) === String(ownerId);
     }, [wishlist]);
 
-    // --- Memoized Filtered Items ---
     const filteredItems = useMemo(() => {
         const items = wishlist?.items || [];
         const priorityWeight = { high: 3, medium: 2, low: 1 };
@@ -107,7 +101,6 @@ const SingleWishlistPage = () => {
             .sort((a, b) => (priorityWeight[b.priority] || 0) - (priorityWeight[a.priority] || 0));
     }, [wishlist?.items, searchTerm, priorityFilter, statusFilter]);
 
-    // --- Handler Functions ---
     const handleItemAdded = (newItem) => {
         setWishlist(prev => ({ 
             ...prev, 
@@ -128,7 +121,6 @@ const SingleWishlistPage = () => {
         }));
     };
 
-    // --- Conditional Rendering (After Hooks) ---
     if (loading) return <div className="loader">Завантаження...</div>;
     
     if (accessDenied) {

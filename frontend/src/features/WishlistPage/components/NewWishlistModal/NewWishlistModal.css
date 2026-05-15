@@ -1,12 +1,10 @@
-/* NewWishlistModal.css */
-
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(56, 81, 68, 0.4); /* Primary з прозорістю */
+  background-color: rgba(56, 81, 68, 0.4); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,21 +14,21 @@
 }
 
 .modal-content {
-  background-color: #F8F5F2; /* Background */
+  background-color: #F8F5F2; 
   padding: 2rem 2.5rem;
   border-radius: 16px;
   width: 100%;
   max-width: 480px;
   box-shadow: 0 15px 35px rgba(56, 81, 68, 0.2);
   animation: modalPop 0.3s ease;
-  border: 1px solid #C2D8C4; /* Accent */
+  border: 1px solid #C2D8C4; 
 }
 
 .modal-content h2 {
   margin: 0 0 1.5rem 0;
   text-align: center;
   font-size: 1.8rem;
-  color: #385144; /* Primary */
+  color: #385144; 
   font-family: inherit;
 }
 
@@ -63,7 +61,7 @@ input,
 textarea,
 select {
   padding: 12px 14px;
-  border: 2px solid #C2D8C4; /* Accent */
+  border: 2px solid #C2D8C4; 
   border-radius: 10px;
   font-size: 1rem;
   background-color: white;
@@ -75,7 +73,7 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #385144; /* Primary */
+  border-color: #385144;
   box-shadow: 0 0 0 3px rgba(56, 81, 68, 0.1);
 }
 
@@ -101,7 +99,6 @@ textarea {
   border: none;
 }
 
-/* Кнопка "Скасувати" */
 .modal-buttons button:first-child {
   background-color: #e2e2e2;
   color: #555;
@@ -111,10 +108,9 @@ textarea {
   background-color: #d4d4d4;
 }
 
-/* Кнопка "Створити" */
 .modal-buttons button:last-child {
-  background-color: #385144; /* Primary */
-  color: #F8F5F2; /* Background колір тексту */
+  background-color: #385144;
+  color: #F8F5F2;
 }
 
 .modal-buttons button:last-child:hover {
@@ -129,7 +125,6 @@ textarea {
   transform: none !important;
 }
 
-/* Анімації */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -146,7 +141,6 @@ textarea {
   }
 }
 
-/* Адаптивність */
 @media (max-width: 500px) {
   .modal-content {
     margin: 15px;

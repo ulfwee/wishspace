@@ -38,7 +38,7 @@ const ProfilePage = () => {
     }, []);
 
     const handleUserUpdate = (updatedUser) => {
-        setUser(updatedUser);        // ← це оновлює профіль на сторінці
+        setUser(updatedUser);       
     };
 
     if (loading) return <div className="loading-screen">Завантаження профілю...</div>;
@@ -52,7 +52,7 @@ const ProfilePage = () => {
             <main className="profile-container">
                 <ProfileHero 
                     user={user} 
-                    onUserUpdate={handleUserUpdate}     // ← ОБОВ'ЯЗКОВО передати!
+                    onUserUpdate={handleUserUpdate}     
                 />
                 
                 

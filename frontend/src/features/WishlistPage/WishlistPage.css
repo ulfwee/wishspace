@@ -1,5 +1,5 @@
 .wishlists-page-container {
-  background-color: #F8F5F2; /* Твій background */
+  background-color: #F8F5F2; 
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
   padding-top: 100px;
@@ -28,7 +28,6 @@
   font-weight: 700;
 }
 
-/* Фільтри як на референсі */
 .filter-tabs {
   display: flex;
   background: #ffffff;
@@ -54,7 +53,6 @@
   color: #ffffff;
 }
 
-/* Сітка карток */
 .collections-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -62,7 +60,6 @@
   padding-bottom: 60px;
 }
 
-/* Адаптивність */
 @media (max-width: 640px) {
   .section-header {
     flex-direction: column;

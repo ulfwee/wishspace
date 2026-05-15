@@ -44,7 +44,6 @@
   margin-bottom: 40px;
 }
 
-/* Сітка карток всередині Hero */
 .hero-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -52,11 +51,11 @@
 }
 
 .hero-stat-card {
-  background: rgba(255, 255, 255, 0.08); /* Напівпрозорий білий */
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 24px;
   border-radius: 16px;
-  backdrop-filter: blur(4px); /* Легке розмиття фону */
+  backdrop-filter: blur(4px); 
 }
 
 .hero-stat-card .stat-number {

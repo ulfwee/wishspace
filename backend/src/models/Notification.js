@@ -11,8 +11,6 @@ class Notification extends BaseModel {
         this.isRead = this.validateBool(notifData.isRead);
         this.type = this.validateType(notifData.type);
         this.relatedId = notifData.relatedId || null;
-        
-        // === NEW FIELDS FOR EVENT REMINDERS ===
         this.eventDate = notifData.eventDate || null;
         this.daysLeft = notifData.daysLeft || null;
         this.eventCategory = notifData.eventCategory || null;
@@ -39,8 +37,6 @@ class Notification extends BaseModel {
             message: this.message,
             isRead: this.isRead,
             relatedId: this.relatedId,
-            
-            // === NEW FIELDS ===
             eventDate: this.eventDate,
             daysLeft: this.daysLeft,
             eventCategory: this.eventCategory,

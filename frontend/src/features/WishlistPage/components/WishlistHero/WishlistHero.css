@@ -1,8 +1,8 @@
 .wishlist-hero {
-  background-color: #385144; /* Твій primary */
+  background-color: #385144;
   border-radius: 30px;
   padding: 48px;
-  color: #F8F5F2; /* Твій background як колір тексту */
+  color: #F8F5F2; 
   margin-bottom: 40px;
   box-shadow: 0 10px 30px rgba(56, 81, 68, 0.15);
 }
@@ -95,7 +95,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Адаптивність для мобільних */
 @media (max-width: 768px) {
   .hero-main-row {
     flex-direction: column;

@@ -1,9 +1,8 @@
-/* GiftCard.css */
 .card {
   background: white;
-  border-radius: 28px; /* Більший радіус */
+  border-radius: 28px; 
   border: none;
-  padding: 12px; /* Внутрішній відступ від краю */
+  padding: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease;
 }

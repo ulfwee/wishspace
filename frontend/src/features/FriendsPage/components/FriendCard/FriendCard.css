@@ -14,7 +14,7 @@
 
 .friend-card-header {
   height: 90px;
-  background: linear-gradient(135deg, #8ea390, #6b8a75); /* твій зелений відтінок */
+  background: linear-gradient(135deg, #8ea390, #6b8a75); 
   position: relative;
 }
 

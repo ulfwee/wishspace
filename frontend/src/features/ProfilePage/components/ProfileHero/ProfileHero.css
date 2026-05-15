@@ -4,10 +4,9 @@
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(56, 81, 68, 0.08);
   margin-bottom: 30px;
-  border: 1px solid #C2D8C4; /* Легкий акцентний бордюр */
+  border: 1px solid #C2D8C4; 
 }
 
-/* Банер як на скріншоті */
 .profile-banner {
   height: 180px;
   background: linear-gradient(135deg, #385144 0%, #4a6b5a 100%);
@@ -17,9 +16,9 @@
 .profile-content-wrapper {
   padding: 0 40px 30px;
   display: flex;
-  justify-content: space-between; /* Кнопка праворуч, інфо ліворуч */
-  align-items: flex-end; /* Вирівнювання по нижній лінії */
-  margin-top: -60px; /* Піднімаємо контент на банер */
+  justify-content: space-between; 
+  align-items: flex-end; 
+  margin-top: -60px; 
   position: relative;
 }
 
@@ -36,7 +35,7 @@
 .profile-avatar {
   width: 150px;
   height: 150px;
-  background: #F8F5F2; /* Світлий фон якщо немає фото */
+  background: #F8F5F2; 
   color: #385144;
   font-size: 3rem;
   font-weight: 800;
@@ -44,7 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 6px solid white; /* Товста біла обводка */
+  border: 6px solid white; 
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden;
 }
@@ -79,7 +78,6 @@
   max-width: 500px;
 }
 
-/* Кнопка редагування */
 .btn-edit-profile {
   background: #385144;
   color: white;
@@ -102,7 +100,6 @@
   box-shadow: 0 6px 15px rgba(56, 81, 68, 0.3);
 }
 
-/* Адаптивність для мобільних */
 @media (max-width: 850px) {
   .profile-content-wrapper {
     flex-direction: column;

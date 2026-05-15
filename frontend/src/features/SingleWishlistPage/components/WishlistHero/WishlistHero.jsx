@@ -15,10 +15,8 @@ const WishlistHero = ({ title, progress, itemCount, reservedCount, onAddClick, o
           <button className="backArrowBtn" onClick={onBack}>←</button>
           <h1 className="title">{title}</h1>
           <span className="birthdayEmoji">🎂</span>
-          {/* Редагувати може тільки власник */}
           {isOwner && <button className="editBtn">✎</button>}
         </div>
-        {/* Додавати може тільки власник */}
         {isOwner && <button className="addButton" onClick={onAddClick}>+ Add Item</button>}
       </div>
 

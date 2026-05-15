@@ -48,7 +48,6 @@ const ProfileHero = ({ user, onUserUpdate }) => {
   return (
     <>
       <div className="profile-hero-card">
-        {/* Верхній банер */}
         <div className="profile-banner"></div>
 
         <div className="profile-content-wrapper">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './AddItemModal.css'; // Використовуємо ті ж стилі для гармонії
+import './AddItemModal.css'; 
 
 const INITIAL_STATE = {
     title: '',
@@ -34,7 +34,6 @@ const AddItemModal = ({ isOpen, onClose, onItemAdded, wishlistId, token }) => {
         setError('');
 
         try {
-            // Додаємо wishlistId до даних перед відправкою
             const itemData = { ...formData };
             
             const res = await axios.post(`http://localhost:5000/wishlists/${wishlistId}/items`, itemData, {
@@ -42,7 +41,6 @@ const AddItemModal = ({ isOpen, onClose, onItemAdded, wishlistId, token }) => {
         });
 
             if (res.status === 201 || res.status === 200) {
-            // Перевірте, що бекенд повертає об'єкт створеного елемента
             onItemAdded(res.data);
             onClose();
         }

@@ -47,7 +47,6 @@ exports.generateUpcomingEventNotifications = async (userId) => {
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (diffDays >= 0 && diffDays <= 14) {
-                // Check if notification already exists
                 const existing = await notificationModel.findByField("relatedId", wishlist.id);
                 const alreadyExists = existing.some(n => n.recipientId === userId);
 
@@ -59,8 +58,6 @@ exports.generateUpcomingEventNotifications = async (userId) => {
                         message: `${friend.username}'s ${wishlist.eventCategory} is in ${diffDays} days`,
                         isRead: false,
                         relatedId: wishlist.id,
-                        
-                        // === NEW DATA ===
                         eventDate: wishlist.eventDate,
                         daysLeft: diffDays,
                         eventCategory: wishlist.eventCategory,
@@ -70,4 +67,4 @@ exports.generateUpcomingEventNotifications = async (userId) => {
             }
         }
     }
-};
+};           

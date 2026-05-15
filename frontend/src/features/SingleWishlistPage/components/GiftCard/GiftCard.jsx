@@ -3,10 +3,8 @@ import axios from 'axios';
 import './GiftCard.css';
 
 const GiftCard = ({ gift, isOwner, onUpdate }) => {
-    // Визначаємо ID (пріоритет на uid, потім _id, потім id)
     const itemId = gift.uid || gift._id || gift.id;
     
-    // Перевірка на булеве значення (враховуючи різні типи з БД)
     const isBooked = gift.isBooked === true || String(gift.isBooked) === 'true';
 
     const handleBook = async () => {
@@ -26,7 +24,6 @@ const GiftCard = ({ gift, isOwner, onUpdate }) => {
             );
             
             alert('Заброньовано!');
-            // Викликаємо функцію оновлення замість window.location.reload()
             if (onUpdate) {
                 onUpdate(itemId);
             }

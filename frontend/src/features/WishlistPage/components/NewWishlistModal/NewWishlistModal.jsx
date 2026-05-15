@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'; // Додали useEffect
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './NewWishlistModal.css';
 
-// 1. Виносимо початковий стан за межі компонента, щоб легко до нього звертатися
 const INITIAL_STATE = {
     title: '',
     description: '',
@@ -17,13 +16,11 @@ const NewWishlistModal = ({ isOpen, onClose, onCreateSuccess, token }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // 2. Створюємо функцію для очищення
     const resetForm = () => {
         setFormData(INITIAL_STATE);
         setError('');
     };
 
-    // 3. Автоматично очищуємо форму, коли модалка закривається
     useEffect(() => {
         if (!isOpen) {
             resetForm();
@@ -46,8 +43,6 @@ const NewWishlistModal = ({ isOpen, onClose, onCreateSuccess, token }) => {
 
             if (res.status === 201) {
                 onCreateSuccess(res.data);
-                // Тут resetForm спрацює автоматично через useEffect, 
-                // оскільки ми викликаємо onClose()
                 onClose();
             }
         } catch (err) {
@@ -116,7 +111,6 @@ const NewWishlistModal = ({ isOpen, onClose, onCreateSuccess, token }) => {
                     />
 
                     <div className="modal-buttons">
-                        {/* Кнопка "Скасувати" просто закриває модалку, а useEffect її очистить */}
                         <button type="button" onClick={onClose} disabled={loading}>
                             Скасувати
                         </button>

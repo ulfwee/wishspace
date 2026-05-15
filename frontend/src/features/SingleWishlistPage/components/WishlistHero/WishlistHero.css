@@ -5,7 +5,6 @@
   margin-bottom: 32px;
 }
 
-/* Верхній ряд: Назва зліва, кнопка справа */
 .heroTop {
   display: flex;
   justify-content: space-between;
@@ -41,7 +40,6 @@
   justify-content: center;
 }
 
-/* Кнопка Add Item */
 .addButton {
   background-color: #385144;
   color: #F8F5F2;
@@ -58,7 +56,6 @@
   filter: brightness(1.2);
 }
 
-/* Статистика */
 .metaRow {
   display: flex;
   align-items: center;
@@ -81,7 +78,6 @@
   font-size: 0.95rem;
 }
 
-/* Прогрес бар */
 .progressSection {
   margin-top: 10px;
 }
@@ -116,10 +112,9 @@
   flex-direction: column;
   gap: 16px;
   margin-bottom: 32px;
-  padding-top: 20px; /* Додаємо простір зверху */
+  padding-top: 20px; 
 }
 
-/* Стиль для круглої стрілки як на макеті */
 .backArrowBtn {
   background: none;
   border: none;
@@ -141,7 +136,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: nowrap; /* Щоб кнопка Add Item не стрибала вниз */
+  flex-wrap: nowrap; 
 }
 
 .titleRow {
@@ -149,4 +144,3 @@
   align-items: center;
   gap: 12px;
 }
-/* Решта твоїх стилів залишається без змін */

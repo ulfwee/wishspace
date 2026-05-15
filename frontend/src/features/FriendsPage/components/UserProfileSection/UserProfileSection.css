@@ -2,7 +2,7 @@
     background: #ffffff;
     border-radius: 30px;
     padding: 32px;
-    margin: -40px 0 40px 0; /* Накладається на Hero */
+    margin: -40px 0 40px 0; 
     position: relative;
     z-index: 10;
     box-shadow: 0 20px 40px rgba(56, 81, 68, 0.1);

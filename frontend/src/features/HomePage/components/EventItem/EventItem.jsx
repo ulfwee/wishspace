@@ -2,7 +2,6 @@ import React from 'react';
 import './EventItem.css';
 
 const EventItem = ({ name, type, date, daysLeft, icon }) => {
-  // Check if daysLeft is a number to determine if we should show "day(s)"
   const isNumeric = typeof daysLeft === 'number';
   const daysText = isNumeric ? (daysLeft === 1 ? 'day' : 'days') : '';
 
