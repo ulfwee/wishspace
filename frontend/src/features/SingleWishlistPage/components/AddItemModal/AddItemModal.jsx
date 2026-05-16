@@ -36,7 +36,7 @@ const AddItemModal = ({ isOpen, onClose, onItemAdded, wishlistId, token }) => {
         try {
             const itemData = { ...formData };
             
-            const res = await axios.post(`http://localhost:5000/wishlists/${wishlistId}/items`, itemData, {
+            const res = await axios.post(`https://wishspace.onrender.com/wishlists/${wishlistId}/items`, itemData, {
             headers: { Authorization: `Bearer ${token}` }
         });
 

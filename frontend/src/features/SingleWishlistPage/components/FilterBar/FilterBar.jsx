@@ -2,18 +2,7 @@ import React from 'react';
 
 import './FilterBar.css';
 
-const FilterBar = ({
-
-  searchTerm,
-  setSearchTerm,
-
-  priorityFilter,
-  setPriorityFilter,
-
-  statusFilter,
-  setStatusFilter
-
-}) => {
+const FilterBar = ({searchTerm, setSearchTerm, priorityFilter, setPriorityFilter, statusFilter, setStatusFilter}) => {
 
   return (
 

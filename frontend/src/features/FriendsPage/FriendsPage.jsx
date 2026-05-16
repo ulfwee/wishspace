@@ -19,7 +19,7 @@ const FriendsPage = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const res = await axios.get('http://localhost:5000/friends/requests', {
+      const res = await axios.get('https://wishspace.onrender.com/friends/requests', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFriendRequests(res.data);
@@ -31,7 +31,7 @@ const FriendsPage = () => {
   const fetchMyFriends = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/friends/my-friends', {
+      const res = await axios.get('https://wishspace.onrender.com/friends/my-friends', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMyFriends(res.data);
@@ -55,7 +55,7 @@ const FriendsPage = () => {
     if (!receiverId) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/friends/request', 
+      await axios.post('https://wishspace.onrender.com/friends/request', 
         { receiverId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -70,7 +70,7 @@ const FriendsPage = () => {
   const acceptRequest = async (requestId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/friends/${requestId}/accept`, {}, {
+      await axios.put(`https://wishspace.onrender.com/friends/${requestId}/accept`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -85,7 +85,7 @@ const FriendsPage = () => {
   const rejectRequest = async (requestId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/friends/${requestId}/reject`, {}, {
+      await axios.put(`https://wishspace.onrender.com/friends/${requestId}/reject`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -100,12 +100,12 @@ const FriendsPage = () => {
     try {
       const token = localStorage.getItem('token');
       
-      const res = await axios.get(`http://localhost:5000/users/search/${username}`, {
+      const res = await axios.get(`https://wishspace.onrender.com/users/search/${username}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const foundUser = res.data;
 
-      const meRes = await axios.get(`http://localhost:5000/users/me`, {
+      const meRes = await axios.get(`https://wishspace.onrender.com/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const currentUser = meRes.data;
@@ -119,7 +119,7 @@ const FriendsPage = () => {
 
       setSelectedUser(foundUser);
       
-      const wishlistRes = await axios.get(`http://localhost:5000/users/${foundUser.id}/wishlists`, {
+      const wishlistRes = await axios.get(`https://wishspace.onrender.com/users/${foundUser.id}/wishlists`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSelectedWishlists(wishlistRes.data);

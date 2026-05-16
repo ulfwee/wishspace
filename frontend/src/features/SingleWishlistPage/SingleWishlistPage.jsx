@@ -41,8 +41,8 @@ const SingleWishlistPage = () => {
             const headers = { Authorization: `Bearer ${token}` };
 
             const [wishlistRes, itemsRes] = await Promise.all([
-                axios.get(`http://localhost:5000/wishlist/${id}`, { headers }),
-                axios.get(`http://localhost:5000/wishlists/${id}/items`, { headers })
+                axios.get(`https://wishspace.onrender.com/wishlist/${id}`, { headers }),
+                axios.get(`https://wishspace.onrender.com/wishlists/${id}/items`, { headers })
             ]);
 
             const wishlistData = wishlistRes.data.wishlist || wishlistRes.data;
@@ -87,7 +87,7 @@ const SingleWishlistPage = () => {
 
     const handleEditWishlist = async (updatedData) => {
         try {
-            await axios.put(`http://localhost:5000/wishlist/${id}`, updatedData, {
+            await axios.put(`https://wishspace.onrender.com/wishlist/${id}`, updatedData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchWishlistData(); 
@@ -100,7 +100,7 @@ const SingleWishlistPage = () => {
 
     const handleDeleteWishlist = async () => {
         try {
-            await axios.delete(`http://localhost:5000/wishlist/${id}`, {
+            await axios.delete(`https://wishspace.onrender.com/wishlist/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setIsDeleteModalOpen(false);

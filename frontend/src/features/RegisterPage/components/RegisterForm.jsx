@@ -31,7 +31,7 @@ const RegisterForm = () => {
     setGoogleLoading(true);
     try {
       const res = await axios.post(
-        'http://localhost:5000/users/google-auth',
+        'https://wishspace.onrender.com/users/google-auth',
         { idToken: credentialResponse.credential },
         { headers: { 'Content-Type': 'application/json' } }
       );
@@ -65,7 +65,7 @@ const RegisterForm = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/users/register',
+        'https://wishspace.onrender.com/users/register',
         formData
       );
       

@@ -37,7 +37,7 @@ const NewWishlistModal = ({ isOpen, onClose, onCreateSuccess, token }) => {
         setError('');
 
         try {
-            const res = await axios.post('http://localhost:5000/wishlist', formData, {
+            const res = await axios.post('https://wishspace.onrender.com/wishlist', formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 

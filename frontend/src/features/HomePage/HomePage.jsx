@@ -45,7 +45,7 @@ const HomePage = () => {
 
       const wishlistRes =
         await axios.get(
-          'http://localhost:5000/wishlist',
+          'https://wishspace.onrender.com/wishlist',
           {
             headers: {
               Authorization:
@@ -65,7 +65,7 @@ const HomePage = () => {
 
           const itemsRes =
             await axios.get(
-              `http://localhost:5000/wishlists/${wishlist.id}/items`,
+              `https://wishspace.onrender.com/wishlists/${wishlist.id}/items`,
               {
                 headers: {
                   Authorization:
@@ -89,7 +89,7 @@ const HomePage = () => {
 
       const notifRes =
         await axios.get(
-          'http://localhost:5000/notifications',
+          'https://wishspace.onrender.com/notifications',
           {
             headers: {
               Authorization:

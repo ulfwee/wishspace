@@ -25,7 +25,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      const res = await axios.get('http://localhost:5000/notifications/', {
+      const res = await axios.get('https://wishspace.onrender.com/notifications/', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -66,7 +66,7 @@ const NotificationsPage = () => {
 
       await Promise.all(
         unreadNotifs.map(notif =>
-          axios.put(`http://localhost:5000/notifications/${notif.id}/read`, {}, {
+          axios.put(`https://wishspace.onrender.com/notifications/${notif.id}/read`, {}, {
             headers: { Authorization: `Bearer ${token}` }
           })
         )
@@ -81,7 +81,7 @@ const NotificationsPage = () => {
   const markAsRead = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/notifications/${id}/read`, {}, {
+      await axios.put(`https://wishspace.onrender.com/notifications/${id}/read`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchNotifications();
@@ -93,7 +93,7 @@ const NotificationsPage = () => {
   const deleteNotification = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/notifications/${id}`, {
+      await axios.delete(`https://wishspace.onrender.com/notifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchNotifications();

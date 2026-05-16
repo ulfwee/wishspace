@@ -11,7 +11,7 @@ const AdminPage = () => {
     const fetchAllUsers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/admin/users', {
+            const res = await axios.get('https://wishspace.onrender.com/admin/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data);
@@ -28,7 +28,7 @@ const AdminPage = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:5000/admin/users/${userId}`, {
+            await axios.delete(`https://wishspace.onrender.com/admin/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             

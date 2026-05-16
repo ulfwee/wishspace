@@ -22,7 +22,7 @@ const WishlistsPage = () => {
         return;
       }
       try {
-        const response = await axios.get('http://localhost:5000/wishlist', {
+        const response = await axios.get('https://wishspace.onrender.com/wishlist', {
   headers: { Authorization: `Bearer ${token}` }
 });
 

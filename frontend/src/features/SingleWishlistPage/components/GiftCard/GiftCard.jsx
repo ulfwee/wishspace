@@ -15,7 +15,7 @@ const GiftCard = ({ gift, isOwner, onUpdate }) => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `http://localhost:5000/items/${itemId}/book`, 
+                `https://wishspace.onrender.com/items/${itemId}/book`, 
                 { 
                     ownerId: ownerId, 
                     isAnonymous: false 

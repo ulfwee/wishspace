@@ -19,7 +19,7 @@ const ProfilePage = () => {
                 }
 
                 const response = await axios.get(
-                    'http://localhost:5000/users/me',
+                    'https://wishspace.onrender.com/users/me',
                     {
                         headers: { Authorization: `Bearer ${token}` }
                     }
