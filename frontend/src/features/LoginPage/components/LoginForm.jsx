@@ -141,16 +141,18 @@ const LoginForm = () => {
                 <div className="divider">
                     <span>Or join with</span>
                 </div>
-
-                <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleError}
-                useOneTap={false}
-                theme="filled_blue"
-                size="large"
-                text="signin_with"
-                shape="pill"
-            />
+                <div className="google-btn-wrapper">
+                    <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleError}
+                    useOneTap={false}
+                    theme="filled_blue"
+                    size="large"
+                    text="signin_with"
+                    shape="pill"
+                    width="100%"
+                    />
+                </div>
 
                 <div className="auth-footer">
                     Dont have an account? <a href="/register">Sign up</a>
