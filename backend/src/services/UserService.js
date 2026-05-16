@@ -1,6 +1,45 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+exports.googleLogin = async (idToken) => {
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const { email, given_name, family_name, picture, sub } = payload;
+
+        const userInstance = new User();
+        let user = await userInstance.findOneByField("email", email);
+
+        if (!user) {
+            const newUserInstance = new User({
+                name: given_name,
+                surname: family_name || "",
+                email: email,
+                username: email.split('@')[0] + Math.floor(Math.random() * 1000),
+                image: picture,
+                role: "user",
+                password: "" 
+            });
+            user = await newUserInstance.create(newUserInstance.toData());
+        }
+
+        const token = jwt.sign(
+            { userId: user.id || user.uid, email: user.email, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+        );
+
+        return { user, token };
+    } catch (error) {
+        throw new Error(`Google auth failed: ${error.message}`);
+    }
+};
 
 exports.getAllUsers = async () => {
     try{

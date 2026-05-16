@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import api from '../../../api/api';
+import { GoogleLogin } from '@react-oauth/google';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,16 +26,48 @@ const RegisterForm = () => {
     });
   };
 
+  // Google Login Handler
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setGoogleLoading(true);
+    try {
+      const res = await axios.post(
+        'http://localhost:5000/users/google-auth',
+        { idToken: credentialResponse.credential },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      const { token, user } = res.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      if (user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/home');
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.error || "Google registration failed");
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    alert("Не вдалося увійти через Google");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-        const response = await axios.post(
-            'http://localhost:5000/users/register',
-            formData
-        );
+      const response = await axios.post(
+        'http://localhost:5000/users/register',
+        formData
+      );
       
       localStorage.setItem('token', response.data.token);
       navigate('/home');
@@ -134,9 +167,15 @@ const RegisterForm = () => {
           <span>Or join with</span>
         </div>
 
-        <button type="button" className="btn-google">
-          Sign up with Google
-        </button>
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={handleGoogleError}
+          useOneTap={false}
+          theme="filled_blue"
+          size="large"
+          text="signup_with"
+          shape="pill"
+        />
 
         <div className="auth-footer">
           Already have an account? <a href="/login">Sign in</a>

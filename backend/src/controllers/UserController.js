@@ -1,140 +1,256 @@
-const UserService = require('../services/UserService');
+class UserController {
 
-exports.getUsersAll = async (req, res) => {
-    try{
-        const users = await UserService.getAllUsers();
-        res.status(200).json({usersInfo: users});
-    }catch(error){
-        res.status(404).json({error: error.message});
+    constructor(userService) {
+        this.userService = userService;
     }
-}
 
-exports.registerUser = async (req, res) => {
-    try{
-        const newUser = await UserService.register(req.body); 
-        res.status(201).json({ message: "User registered successfully",
-            ...newUser });
-    }catch(error){
-        res.status(400).json({ error: error.message });
-    }
-};
+    googleAuth = async (req, res) => {
 
-exports.loginUser = async (req, res) => {
-    try{
-        const user = await UserService.signin(req.body);
-        res.status(200).json({
-            message: "Login successful",
-            ...user
-        });
-    }catch(error){
-        res.status(400).json({ error: error.message });
-    }
-}
+        try {
 
-exports.updateUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const userIdFromToken = req.user.userId;  
+            const { idToken } = req.body;
 
-        if (id !== userIdFromToken && req.user.role !== 'admin') {
-            return res.status(403).json({ error: "You can only update your own profile" });
-        }
+            const result =
+                await this.userService
+                    .googleLogin(idToken);
 
-        const updateData = { ...req.body };
-
-        delete updateData.password;
-        delete updateData.role;     
-
-        const updatedUser = await UserService.updateExistingUser(id, updateData);
-
-        const { password, ...safeUser } = updatedUser;
-
-        res.status(200).json({
-            message: "Profile updated successfully",
-            data: safeUser
-        });
-    } catch (error) {
-        console.error("Update error:", error);
-        res.status(400).json({ error: error.message });
-    }
-};
-
-exports.deleteUser = async (req, res) => {
-    try{
-        const {id} = req.params;
-        const result = await UserService.deleteUser(id);
-        res.status(200).json(result);
-    }catch(error){
-        res.status(400).json({ error: error.message});
-    }
-}
-
-exports.getUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = await UserService.getUserById(id);
-
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(404).json({ error: error.message });
-    }
-};
-
-exports.getMe = async (req, res) => {
-    try {
-        const user = await UserService.getMe(req.user.userId);
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-exports.searchByUsername = async (req, res) => {
-
-    try {
-
-        const result = await UserService.findByUsername(
-            req.params.username
-        );
-
-        if (!result) {
-            return res.status(404).json({
-                message: 'User not found'
+            res.status(200).json({
+                message:
+                    "Google login successful",
+                ...result
             });
-        }
 
-        res.json(result);
+        } catch (error) {
 
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
-};
-
-exports.getUserById = async (req, res) => {
-
-    try {
-
-        const result = await UserService.findById(
-            req.params.id
-        );
-
-        if (!result) {
-            return res.status(404).json({
-                message: 'User not found'
+            res.status(400).json({
+                error: error.message
             });
+
         }
+    };
 
-        res.json(result);
+    getUsersAll = async (req, res) => {
 
-    } catch (error) {
+        try {
 
-        res.status(500).json({
-            message: error.message
-        });
+            const users =
+                await this.userService
+                    .getAllUsers();
 
-    }
-};
+            res.status(200).json({
+                usersInfo: users
+            });
+
+        } catch (error) {
+
+            res.status(404).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    registerUser = async (req, res) => {
+
+        try {
+
+            const newUser =
+                await this.userService
+                    .register(req.body);
+
+            res.status(201).json({
+                message:
+                    "User registered successfully",
+                ...newUser
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    loginUser = async (req, res) => {
+
+        try {
+
+            const user =
+                await this.userService
+                    .signin(req.body);
+
+            res.status(200).json({
+                message:
+                    "Login successful",
+                ...user
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    updateUser = async (req, res) => {
+
+        try {
+
+            const { id } = req.params;
+
+            const userIdFromToken =
+                req.user.userId;
+
+            if (
+                id !== userIdFromToken &&
+                req.user.role !== 'admin'
+            ) {
+
+                return res.status(403).json({
+                    error:
+                        "You can only update your own profile"
+                });
+            }
+
+            const updateData = {
+                ...req.body
+            };
+
+            delete updateData.password;
+            delete updateData.role;
+
+            const updatedUser =
+                await this.userService
+                    .updateExistingUser(
+                        id,
+                        updateData
+                    );
+
+            const {
+                password,
+                ...safeUser
+            } = updatedUser;
+
+            res.status(200).json({
+                message:
+                    "Profile updated successfully",
+                data: safeUser
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    deleteUser = async (req, res) => {
+
+        try {
+
+            const result =
+                await this.userService
+                    .deleteUser(
+                        req.params.id
+                    );
+
+            res.status(200).json(result);
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    getMe = async (req, res) => {
+
+        try {
+
+            const user =
+                await this.userService
+                    .getMe(
+                        req.user.userId
+                    );
+
+            res.status(200).json(user);
+
+        } catch (error) {
+
+            res.status(400).json({
+                error: error.message
+            });
+
+        }
+    };
+
+    searchByUsername = async (req, res) => {
+
+        try {
+
+            const result =
+                await this.userService
+                    .findByUsername(
+                        req.params.username
+                    );
+
+            if (!result) {
+
+                return res.status(404).json({
+                    message:
+                        'User not found'
+                });
+
+            }
+
+            res.json(result);
+
+        } catch (error) {
+
+            res.status(500).json({
+                message: error.message
+            });
+
+        }
+    };
+
+    getUserById = async (req, res) => {
+
+        try {
+
+            const result =
+                await this.userService
+                    .findById(
+                        req.params.id
+                    );
+
+            if (!result) {
+
+                return res.status(404).json({
+                    message:
+                        'User not found'
+                });
+
+            }
+
+            res.json(result);
+
+        } catch (error) {
+
+            res.status(500).json({
+                message: error.message
+            });
+
+        }
+    };
+}
+
+module.exports = UserController;

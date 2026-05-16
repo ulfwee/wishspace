@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import googleLogo from "../../../assets/google.png";
 
 const LoginForm = () => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         email: "",
@@ -18,6 +20,38 @@ const LoginForm = () => {
             ...formData,
             [e.target.name]: e.target.value
         });
+    };
+
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        setGoogleLoading(true);
+        try {
+            const res = await axios.post(
+                'http://localhost:5000/users/google-auth',
+                { idToken: credentialResponse.credential },   
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+
+            const { token, user } = res.data;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            if (user.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/home');
+            }
+        } catch (error) {
+            console.error(error);
+            alert(error.response?.data?.error || "Google login failed");
+        } finally {
+            setGoogleLoading(false);
+        }
+    };
+
+    const handleGoogleError = () => {
+        alert("Google login failed. Please try again.");
     };
 
     const handleSubmit = async (e) => {
@@ -108,10 +142,15 @@ const LoginForm = () => {
                     <span>Or join with</span>
                 </div>
 
-                <button type="button" className="btn-google">
-                    <img src={googleLogo} alt="Google" />
-                    Sign up with Google
-                </button>
+                <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                useOneTap={false}
+                theme="filled_blue"
+                size="large"
+                text="signin_with"
+                shape="pill"
+            />
 
                 <div className="auth-footer">
                     Dont have an account? <a href="/register">Sign up</a>
