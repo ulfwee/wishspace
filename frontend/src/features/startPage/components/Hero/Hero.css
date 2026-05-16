@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
@@ -7,58 +8,65 @@
     opacity: 0.85;
   }
 }
-.herodiv{
+
+.herodiv {
     background: linear-gradient(to right, #222a22,#303c34, #29342b);
     background: url('../../../../assets/balloonss.jpg');
     background-size: cover;
+    background-position: center; 
     opacity: 0.85;
     height: 650px;
     display: flex;
+    align-items: center;      
+    justify-content: flex-end;
+    padding: 0 10%;           
     color: #e6e2e2;
     animation: 1.5s fadeInUp;
+    box-sizing: border-box;
 }
-.hero_text{
+
+.hero_text {
     display: flex;
     flex-direction: column;
+    align-items: center;      
+    text-align: center;
 }
-.main_title{
+
+.main_title {
     font-size: 60px;
     max-width: 600px;
     text-align: center;
     font-family: "Lobster", sans-serif;
     font-weight: 400;
     font-style: normal;
-    position: relative;
-    top: 15%;
-    left: 68%;
+    margin: 0 0 20px 0; 
     -webkit-text-stroke-color: #002f10;
     -webkit-text-stroke-width: 1.5px;
     color: #ebe5df;
 }
-.subtitle{
-    position: relative;
-    top: 17%;
-    left: 60%;
+
+.subtitle {
     font-family: "Lobster", sans-serif;
     font-weight: 300;
     font-style: normal;
     font-size: 22px;
     text-align: center;
     max-width: 700px;
+    margin: 0 0 40px 0; 
     -webkit-text-stroke-color: #3d3f3e;
     -webkit-text-stroke-width: 0.5px;
     color: #d4e3d0f2;
 }
-.buttons{
-    position: relative;
-    top:58%;
-    left: -5%;
+
+.buttons {
     height: fit-content;
     width: 300px;
     display: flex;
     justify-content: space-between;
+    margin: 0; 
 }
-.work_button{
+
+.work_button {
     height: 35px;
     width: 130px;
     border-radius: 5px;
@@ -66,9 +74,19 @@
     color: #35342df2;
     font-weight: 600;
     background-color: #f0e2d0d5;
+    cursor: pointer;
 }
-.work_button:hover{
+
+.work_button:hover {
     background-color: #f0e2d0fe;
+}
+
+
+@media (max-width: 1200px) {
+    .herodiv {
+        justify-content: center;
+        padding: 0 24px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -83,22 +101,34 @@
     }
     .main_title {
         font-size: 2.8rem;
+        margin-bottom: 15px;
     }
     .subtitle {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+        margin-bottom: 30px;
     }
 }
 
 @media (max-width: 576px) {
+    .herodiv {
+        height: auto;
+        min-height: 550px;
+        padding: 60px 16px;
+    }
     .main_title {
         font-size: 2.2rem;
+    }
+    .subtitle {
+        font-size: 1.05rem;
     }
     .buttons {
         flex-direction: column;
         width: 100%;
+        max-width: 280px;
         gap: 12px;
     }
     .work_button, .buttons > * {
         width: 100% !important;
+        height: 40px; 
     }
 }
