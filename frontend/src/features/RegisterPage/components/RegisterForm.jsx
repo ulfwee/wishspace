@@ -167,15 +167,18 @@ const RegisterForm = () => {
           <span>Or join with</span>
         </div>
 
-        <GoogleLogin
-          onSuccess={handleGoogleSuccess}
-          onError={handleGoogleError}
-          useOneTap={false}
-          theme="filled_blue"
-          size="large"
-          text="signup_with"
-          shape="pill"
-        />
+        <div className="google-btn-wrapper">
+            <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            useOneTap={false}
+            theme="filled_blue"
+            size="large"
+            text="signin_with"
+            shape="pill"
+            width="350"
+            />
+        </div>
 
         <div className="auth-footer">
           Already have an account? <a href="/login">Sign in</a>
