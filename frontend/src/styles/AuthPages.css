@@ -256,8 +256,11 @@
   margin-top: 4px;
 }
 
-.google-btn-wrapper > div {
+.google-btn-wrapper > div,
+.google-btn-wrapper iframe {
   width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
 }
 
 @media (max-width: 480px) {
@@ -274,8 +277,8 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 400px) {
   .google-btn-wrapper {
-    transform: scale(0.95);
+    transform: scale(0.98);
   }
 }
