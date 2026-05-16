@@ -11,7 +11,7 @@ const adminRoutes = require('./routes/admin');
 const app = express();
 
 app.use(cors({
-    origin: 'https://wishspace-one.vercel.app/',
+    origin: 'https://wishspace-one.vercel.app',
     credentials: true
 }));
 app.options('*', cors());
