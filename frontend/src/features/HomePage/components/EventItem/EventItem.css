@@ -8,6 +8,7 @@
   margin-bottom: 12px;
   border: 1px solid rgba(194, 216, 196, 0.3);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
 }
 
 .event-user {
@@ -25,6 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .event-details .name {
@@ -50,4 +52,24 @@
 .date {
   font-size: 0.8rem;
   color: #9CA3AF;
+}
+
+
+@media (max-width: 600px) {
+  .event-item {
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .event-time {
+    text-align: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    border-top: 1px solid #f3f4f6; 
+    padding-top: 8px;
+  }
 }

@@ -36,3 +36,30 @@
   background-position: right 15px center;
   background-size: 16px;
 }
+
+
+@media (max-width: 768px) {
+  .filterBar {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .searchWrapper {
+    width: 100%;
+  }
+
+  .filterBar {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  
+  .searchWrapper { grid-column: span 1; }
+  
+  @media (min-width: 480px) {
+    .filterBar {
+      grid-template-columns: 1fr 1fr;
+    }
+    .searchWrapper { grid-column: span 2; }
+  }
+}

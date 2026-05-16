@@ -75,6 +75,8 @@ console.log("ДАНІ З СЕРВЕРА:", response.data);
                   eventCategory={collection.eventCategory}
                   privacy={collection.privacy}
                   imgURL={collection.imgURL}
+                  current={collection.items?.filter(i => i.isBooked).length || 0}
+                  total={collection.items?.length || 0}
                   onClick={() => navigate(`/wishlists/${collection.id || collection._id}`)}
                 />
               ))

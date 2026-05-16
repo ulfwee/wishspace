@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 16px;
 }
 
 .modal-content {
@@ -18,7 +19,9 @@
   max-width: 480px;
   padding: 32px;
   box-shadow: 0 20px 50px rgba(56, 81, 68, 0.25);
-  margin: 20px;
+  box-sizing: border-box;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-header {
@@ -40,6 +43,7 @@
   font-size: 1.6rem;
   cursor: pointer;
   color: #9ca3af;
+  padding: 4px;
 }
 
 .form-grid {
@@ -67,6 +71,7 @@
   border-radius: 12px;
   font-size: 1rem;
   transition: border 0.2s;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -89,6 +94,7 @@
   font-weight: 600;
   cursor: pointer;
   font-size: 1.02rem;
+  text-align: center;
 }
 
 .btn-cancel {
@@ -105,4 +111,33 @@
 
 .btn-save:hover {
   background: #2c3f35;
+}
+
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.4rem; 
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0; 
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+    padding: 12px;
+  }
 }

@@ -3,42 +3,80 @@
   flex-direction: column;
   gap: 16px;
   margin-bottom: 32px;
+  padding-top: 20px; 
 }
 
 .heroTop {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap; 
+  gap: 20px;
 }
 
 .titleRow {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 1;
+  min-width: 0;
 }
 
 .title {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: #385144;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .birthdayEmoji {
   font-size: 2rem;
+  flex-shrink: 0;
 }
 
-.editBtn {
+.backArrowBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #385144;
+  cursor: pointer;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.backArrowBtn:hover {
+  transform: translateX(-4px);
+}
+
+.owner-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.editBtn, .deleteBtn {
   background: #f0f2f0;
   border: none;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1rem;
+  transition: background 0.2s;
 }
+
+.editBtn:hover { background: #e2e5e2; }
+.deleteBtn:hover { background: #ffe6e6; color: #ef4444; }
 
 .addButton {
   background-color: #385144;
@@ -48,7 +86,9 @@
   border: none;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .addButton:hover {
@@ -61,6 +101,9 @@
   align-items: center;
   gap: 15px;
   margin-top: -5px;
+  flex-wrap: wrap;
+  color: #385144;
+  font-size: 0.95rem;
 }
 
 .privacyBadge {
@@ -70,12 +113,9 @@
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
-}
-
-.statsText {
-  color: #385144;
-  opacity: 0.8;
-  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .progressSection {
@@ -107,45 +147,26 @@
   border-radius: 10px;
   transition: width 0.5s ease-out;
 }
-.heroSection {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
-  padding-top: 20px; 
-}
 
-.backArrowBtn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #385144;
-  cursor: pointer;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
 
-.backArrowBtn:hover {
-  transform: translateX(-4px);
-}
+@media (max-width: 768px) {
+  .heroTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
 
-.heroTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap; 
-}
+  .titleRow {
+    width: 100%;
+  }
 
-.titleRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+  .title {
+    font-size: 1.8rem;
+  }
 
-.owner-actions{
-  display: flex;
-  gap: 10px;
+  .addButton {
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+  }
 }

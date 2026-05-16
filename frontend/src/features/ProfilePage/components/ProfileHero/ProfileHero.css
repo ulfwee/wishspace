@@ -5,12 +5,14 @@
   box-shadow: 0 10px 40px rgba(56, 81, 68, 0.08);
   margin-bottom: 30px;
   border: 1px solid #C2D8C4; 
+  box-sizing: border-box;
 }
 
 .profile-banner {
   height: 180px;
   background: linear-gradient(135deg, #385144 0%, #4a6b5a 100%);
   width: 100%;
+  transition: height 0.3s ease;
 }
 
 .profile-content-wrapper {
@@ -20,6 +22,7 @@
   align-items: flex-end; 
   margin-top: -60px; 
   position: relative;
+  box-sizing: border-box;
 }
 
 .profile-main-info {
@@ -46,6 +49,7 @@
   border: 6px solid white; 
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .profile-avatar img {
@@ -76,6 +80,7 @@
   color: #4B5563;
   font-size: 0.95rem;
   max-width: 500px;
+  line-height: 1.4;
 }
 
 .btn-edit-profile {
@@ -88,10 +93,12 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   transition: all 0.2s ease;
   margin-bottom: 10px;
   box-shadow: 0 4px 12px rgba(56, 81, 68, 0.2);
+  white-space: nowrap;
 }
 
 .btn-edit-profile:hover {
@@ -100,13 +107,19 @@
   box-shadow: 0 6px 15px rgba(56, 81, 68, 0.3);
 }
 
+
 @media (max-width: 850px) {
+  .profile-banner {
+    height: 140px;
+  }
+
   .profile-content-wrapper {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-top: -75px;
+    margin-top: -70px;
     gap: 20px;
+    padding: 0 20px 24px;
   }
 
   .profile-main-info {
@@ -116,12 +129,47 @@
   }
 
   .profile-avatar {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 130px;
+    font-size: 2.5rem;
+    border-width: 4px;
+  }
+
+  .profile-text-details {
+    padding: 0;
   }
 
   .btn-edit-profile {
     width: 100%;
-    justify-content: center;
+    max-width: 280px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-hero-card {
+    border-radius: 20px;
+  }
+
+  .profile-banner {
+    height: 110px;
+  }
+
+  .profile-content-wrapper {
+    margin-top: -55px;
+  }
+
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+    font-size: 2rem;
+  }
+
+  .profile-name {
+    font-size: 1.6rem;
+  }
+
+  .btn-edit-profile {
+    max-width: 100%;
   }
 }

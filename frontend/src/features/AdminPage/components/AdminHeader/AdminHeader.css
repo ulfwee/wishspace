@@ -4,7 +4,6 @@
   left: 0;
   right: 0;
   z-index: 1000;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,6 +12,7 @@
   background-color: #ffffff;
   border-bottom: 1px solid rgba(56, 81, 68, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: padding 0.3s ease;
 }
 
 .header-logo {
@@ -118,4 +118,30 @@
 .user-profile-circle:hover {
   transform: scale(1.05);
   border-color: #385144;
+}
+
+@media (max-width: 1024px) {
+  .home-header {
+    padding: 0 40px;
+  }
+  .header-nav {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-header {
+    padding: 0 20px;
+    height: 60px; 
+  }
+  
+  .header-logo span {
+    font-size: 1.2rem; 
+  }
+
+  .logo-square {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
 }

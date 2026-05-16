@@ -4,6 +4,7 @@
     padding: 80px 40px 120px 40px;
     color: #ffffff;
     text-align: center;
+    transition: padding 0.3s ease;
 }
 
 .search-bar-container {
@@ -15,6 +16,7 @@
     max-width: 500px;
     margin: 30px auto 0 auto;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-sizing: border-box;
 }
 
 .search-bar-container input {
@@ -24,4 +26,34 @@
     margin-left: 15px;
     font-size: 1.1rem;
     color: #333;
+}
+
+.search-icon {
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .friends-hero {
+        padding: 40px 20px 60px 20px; 
+        border-radius: 20px; 
+    }
+
+    .friends-hero h1 {
+        font-size: 2rem; 
+    }
+
+    .friends-hero p {
+        font-size: 1rem;
+    }
+
+    .search-bar-container {
+        padding: 12px 16px;
+        margin-top: 20px;
+        width: 100%; 
+    }
+    
+    .search-bar-container input {
+        font-size: 1rem;
+    }
 }

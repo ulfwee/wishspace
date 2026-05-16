@@ -6,6 +6,7 @@
   align-items: center;
   flex: 1;
   min-width: 250px;
+  box-sizing: border-box; 
 }
 
 .stat-card-info .title {
@@ -29,4 +30,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+
+@media (max-width: 640px) {
+  .stat-card {
+    padding: 16px; 
+    min-width: 100%; 
+  }
+
+  .stat-card-info .value {
+    font-size: 1.75rem; 
+  }
 }
