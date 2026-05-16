@@ -150,7 +150,7 @@ const LoginForm = () => {
                     size="large"
                     text="signin_with"
                     shape="pill"
-                    width="350"
+                    width="370"
                     />
                 </div>
 
